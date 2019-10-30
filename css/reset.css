@@ -53,3 +53,53 @@ a{
 a:visited{
     color: inherit;
 }
+
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+/* Reset `button` and button-style `input` default styles */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    /* cursor: default; */
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-appearance: button; /* for input */
+    -webkit-user-select: none; /* for button */
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+input[type="text"],
+input[type="password"]{
+    border: 1px solid #cccccc; //цвет рамки
+border-radius: 3px; //закругление углов (общее)
+-webkit-border-radius: 3px; //закругление углов (Google Chrome)
+-moz-border-radius: 3px; //закругление углов (FireFox)
+-khtml-border-radius: 3px; //закругление углов (Safari)
+background: #ffffff !important; // желательно прописывать, так как в Chrome при сохранных данных оно может быть желтым
+outline: none; // удаляет обводку в браузерах хром(желтая) и сафари(синяя)
+height: 24px; // высота на свое усмотрение
+width: 120px; // ширина на свое усмотрение
+color: #cccccc; //цвет шрифта в обычном состоянии
+font-size: 11px; // Размер шрифта
+font-family: Tahoma; // Стиль шрифта
+}

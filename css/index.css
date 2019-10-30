@@ -1,22 +1,36 @@
+
+
+
+/* index.js required */
+.hidden{
+    display: none;
+}
+/**/
+
+body{
+    position: relative;
+}
+
 .container{
     width: 1120px;
     height: 100%;
     margin: auto;
 }
 
-header{
+.main{
+    position: fixed;
     width: 100%;
     height: 100vh;
     background: url("../images/header.jpg");
     color: #eeeeee;
 }
 
-header .wrapper{
+.main .wrapper{
     background: rgba(34, 40, 49, 0.8);
     height: 100%;
 }
 
-header .container{
+.main .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,7 +51,7 @@ p{
     align-self: center;
 }
 
-.login-block a{
+.login-block .btn{
     display: inline-block;
     padding: 15px 25px;
     box-sizing: border-box;
@@ -45,6 +59,7 @@ p{
     font-size: 24px;
     border-radius: 5px;
     margin: 0 10px;
+    cursor: pointer;
     -webkit-transition: background, color, box-shadow 500ms;
     -moz-transition: background, color, box-shadow 500ms;
     -ms-transition: background, color, box-shadow 500ms;
@@ -52,21 +67,21 @@ p{
     transition: background, color, box-shadow 500ms;
 }
 
-.login-block .login{
+.login-block .login-btn{
     background: #00adb5;
     -webkit-box-shadow: 0 0 15px 5px rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    0 0 15px 5px rgba(50, 50, 50, 0.75);
     box-shadow:         0 0 15px 5px rgba(50, 50, 50, 0.75);
 }
 
-.login-block .login:hover{
+.login-block .login-btn:hover{
     background: #267B80;
     -webkit-box-shadow: 0 0 0 0 rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    0 0 0 0 rgba(50, 50, 50, 0.75);
     box-shadow:         0 0 0 0 rgba(50, 50, 50, 0.75);
 }
 
-.login-block .signup{
+.login-block .signup-btn{
     color: #393e46;
     background: #eeeeee;
     border: 1px solid #393e46;
@@ -75,7 +90,7 @@ p{
     box-shadow:         0 0 15px 5px rgba(50, 50, 50, 0.75);
 }
 
-.login-block .signup:hover{
+.login-block .signup-btn:hover{
     color: #eeeeee;
     background: transparent;
     border: 1px solid #eeeeee;
@@ -84,7 +99,74 @@ p{
     box-shadow:         0 0 0 0 rgba(50, 50, 50, 0.75);
 }
 
-.login-block .about{
+.login-block .login-about{
     margin-top: 10px;
     text-align: center;
+}
+
+/* login/signup */
+.close-btn{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 50px;
+    height: 50px;
+    background: #000;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.login-container{
+    position: relative;
+    box-sizing: padding-box;
+    z-index: 2;
+}
+
+.login, .signup{
+    position: absolute;
+    margin: 50px auto;
+    background: #eeeeee;
+    height: max-content;
+}
+
+h2{
+    text-align: center;
+    margin: 25px 0;
+    font-size: 36px;
+}
+
+.login-container form{
+    width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container form label{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.login-container form input:not([type="submit"]){
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.login-container form input[type="submit"]{
+    padding: 10px;
+    cursor: pointer;
+    color: #eeeeee;
+    background: #00adb5;
+    border: 1px solid #eeeeee;
+    margin-bottom: 50px;
+    -webkit-transition: background, color 500ms;
+    -moz-transition: background, color 500ms;
+    -ms-transition: background, color 500ms;
+    -o-transition: background, color 500ms;
+    transition: background, color 500ms;
+}
+.login-container form input[type="submit"]:hover{
+    color: #00adb5;
+    background: #eeeeee;
+    border: 1px solid #00adb5;
 }

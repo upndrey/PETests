@@ -1,18 +1,14 @@
-<header>
-    <div class="wrapper">
-        <div class="container">
-            <h1>Physical Education Tests</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Autem beatae blanditiis commodi consequuntur dolore eaque
-                fugiat inventore ipsam iure laudantium molestiae nihil nisi
-                odit perferendis repellat sapiente, soluta temporibus tenetur.
-            </p>
-            <div class="login-block">
-                <a href="" class="login">Вход</a>
-                <a href="" class="signup">Регистрация</a>
-                <div class="about">Для прохождения тестов необходимо Войти</div>
-            </div>
-        </div>
-    </div>
-</header>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Physical Education Tests</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap&subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>

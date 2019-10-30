@@ -1,4 +1,3 @@
 <?php
-$connection = mysqli_connect('localhost', 'root', '', 'PETests');
-mysqli_query($connection, 'CREATE TEMPORARY TABLE `table`');
+$connection = mysqli_connect('127.0.0.1:3306', 'root', '', 'petests');
 ?>
