@@ -5,6 +5,7 @@ $pass = $_POST['pass'];
 $result = mysqli_query($connection, "(SELECT id FROM users WHERE login='$login' AND password='$pass')");
 $rows = mysqli_fetch_array($result);
 if($rows){
+    session_start();
     $_SESSION['login'] = $login;
     header('Location: /pages/tests.php');
     exit;

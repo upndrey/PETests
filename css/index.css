@@ -251,3 +251,14 @@ p{
     color: #043965;
     border: 1px dashed #043965;
 }
+
+/* Test page */
+
+.question{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.answer{
+    padding: 10px;
+}

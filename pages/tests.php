@@ -1,7 +1,7 @@
 <?
 session_start();
 if(!$_SESSION['login']){
-    header('Location: ' . $_SERVER['SERVER_NAME']);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 ?>
 

@@ -1,8 +1,12 @@
 <?
+session_start();
 if(!$_SESSION['login']){
-    header('Location: URL = localhost');
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
-echo $_SERVER['SERVER_NAME'];
+
+require_once "../php/connection.php";
+$resultQuestions = mysqli_query($connection, "(SELECT text FROM questions)");
+$resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants)");
 ?>
 
 <!doctype html>
@@ -22,6 +26,17 @@ echo $_SERVER['SERVER_NAME'];
 
 <div class="container tests">
     <h2>Выберите тест:</h2>
+    <?
+    while ($rowQuestion = mysqli_fetch_array($resultQuestions)) {
+        echo "<div class='question'>" . $rowQuestion[0] . "</div>";
+        $i = 0;
+        while ($rowAnswer = mysqli_fetch_array($resultAnswers)) {
+            echo "<div class='answer'>" . $rowAnswer[0] . "</div>";
+            $i++;
+            if($i == 4) break;
+        }
+    }
+    ?>
 </div>
 </body>
 </html>
