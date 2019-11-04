@@ -36,7 +36,7 @@ body{
     justify-content: center;
 }
 
-h1{
+.main h1{
     font-size: 48px;
     margin-bottom: 25px;
 }
@@ -129,7 +129,7 @@ p{
     height: max-content;
 }
 
-h2{
+.login h2, .signup h2{
     text-align: center;
     margin: 25px 0;
     font-size: 36px;
@@ -169,4 +169,85 @@ h2{
     color: #00adb5;
     background: #eeeeee;
     border: 1px solid #00adb5;
+}
+
+/* Tests page */
+.tests-header{
+    width: 99%;
+    height: 60px;
+    margin: auto;
+    background: #eee;
+}
+
+.tests-header .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tests-header h1{
+    font-size: 36px;
+    align-self: center;
+    font-family: Oswald, serif;
+    color: #043965;
+}
+
+.tests-header-links{
+    display: flex;
+}
+
+.tests-header-links a{
+    padding: 10px;
+    font-family: "Open Sans", serif;
+}
+
+.tests-header-links .username{
+    font-weight: bold;
+}
+
+.tests{
+    background: #eee;
+    margin-top: 30px;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.tests h2{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: Oswald, serif;
+    color: #043965;
+}
+
+.tests .test-link{
+    background: #fff;
+    padding: 30px;
+    display: block;
+    width: calc(100% - 60px);
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #043965;
+    -webkit-transition: ease-in-out .5s;
+    -moz-transition: ease-in-out .5s;
+    -ms-transition: ease-in-out .5s;
+    -o-transition: ease-in-out .5s;
+    transition: ease-in-out .5s;
+}
+
+.tests .test-link:hover{
+    background: #043965;
+    color: #fff;
+    cursor: pointer;
+}
+
+.tests .test-help{
+    background: #eee;
+    padding: 30px;
+    width: calc(100% - 60px);
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 0;
+    color: #043965;
+    border: 1px dashed #043965;
 }

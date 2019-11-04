@@ -1,8 +1,8 @@
 <?
-session_start();
 if(!$_SESSION['login']){
-    header('Location: ' . $_SERVER['SERVER_NAME']);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
+
 ?>
 
 <!doctype html>
@@ -19,15 +19,7 @@ if(!$_SESSION['login']){
     <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-<header class="tests-header">
-    <div class="container">
-        <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
-        <div class="tests-header-links">
-            <a href="" class="username"><? echo $_SESSION['login']; ?></a>
-            <a href="../" class="logout">Выход</a>
-        </div>
-    </div>
-</header>
+
 <div class="container tests">
     <h2>Выберите тест:</h2>
     <a href="test1.php" class="test-link">Тест 1</a>
@@ -38,7 +30,5 @@ if(!$_SESSION['login']){
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </div>
 </div>
-
-<script src="../scripts/index.js"></script>
 </body>
 </html>
