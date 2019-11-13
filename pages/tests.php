@@ -3,6 +3,27 @@ session_start();
 if(!$_SESSION['login']){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
+
+require_once "../php/connection.php";
+$login = $_SESSION['login'];
+$query = "(SELECT id FROM users WHERE login='$login')";
+$resultLoginId = mysqli_query($connection, $query);
+$loginId = mysqli_fetch_array($resultLoginId);
+
+$query = "(SELECT test_id FROM results WHERE user_id='$loginId[0]')";
+$resultTestId = mysqli_query($connection, $query);
+$testId = mysqli_fetch_array($resultTestId);
+$isFirstDone = $isSecondDone = $isThirdDone = 0;
+for($i = 0; $i < count($testId); $i++){
+    if($testId[$i][0] == 1)
+        $isFirstDone = 1;
+    else
+        if($testId[$i][0] == 2)
+            $isSecondDone = 1;
+    else
+        if($testId[$i][0] == 3)
+            $isThirdDone = 1;
+}
 ?>
 
 <!doctype html>
@@ -23,19 +44,18 @@ if(!$_SESSION['login']){
     <div class="container">
         <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
         <div class="tests-header-links">
-            <a href="" class="username"><? echo $_SESSION['login']; ?></a>
+            <a href="" class="username"><? echo $login; ?></a>
             <a href="../" class="logout">Выход</a>
         </div>
     </div>
 </header>
 <div class="container tests">
     <h2>Выберите тест:</h2>
-    <a href="test1.php" class="test-link">Тест 1</a>
-    <a href="test2.php" class="test-link">Тест 2</a>
-    <a href="test3.php" class="test-link">Тест 3</a>
+    <a href="test1.php" class="test-link <? if($isFirstDone) echo " test-done" ?>">Тест 1</a>
+    <a href="test2.php" class="test-link <? if($isSecondDone) echo " test-done" ?>">Тест 2</a>
+    <a href="test3.php" class="test-link <? if($isThirdDone) echo " test-done" ?>">Тест 3</a>
     <div class="test-help">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Пройденные тесты будут отмечены <span class="special-color">специальным цветом</span>, дважды один тест пройти нельзя.
     </div>
 </div>
 

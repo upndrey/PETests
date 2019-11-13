@@ -252,6 +252,22 @@ p{
     border: 1px dashed #043965;
 }
 
+.tests .test-done{
+    pointer-events: none;
+    color: white;
+    background: #25ae88;
+}
+
+.tests .test-done:hover{
+    color: white;
+    background: #25ae88;
+    cursor: default;
+}
+
+.tests .special-color{
+    background: #25ae88;
+}
+
 /* Test page */
 
 .question{
@@ -260,5 +276,26 @@ p{
 }
 
 .answer{
+    display: inline-block;
     padding: 10px;
+    cursor: pointer;
+}
+
+.test .send-result{
+    color: white;
+    background: #25ae88;
+    border: 1px solid #25ae88;
+    display: block;
+    margin: auto;
+    text-align: center;
+    padding: 15px 50px;
+    margin-top: 30px;
+    box-sizing: padding-box;
+}
+
+.test .send-result:hover{
+    cursor: pointer;
+    border: 1px solid #25ae88;
+    background: white;
+    color: #25ae88;
 }

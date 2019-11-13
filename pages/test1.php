@@ -24,19 +24,37 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants)")
 </head>
 <body>
 
+<header class="tests-header">
+    <div class="container">
+        <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
+        <div class="tests-header-links">
+            <a href="" class="username"><? echo $_SESSION['login']; ?></a>
+            <a href="../" class="logout">Выход</a>
+        </div>
+    </div>
+</header>
 <div class="container tests">
-    <h2>Выберите тест:</h2>
+    <form action="../php/sendResult.php" method="post" class="test">
+    <h2>Тест 1:</h2>
     <?
+    $questionId = 0;
     while ($rowQuestion = mysqli_fetch_array($resultQuestions)) {
         echo "<div class='question'>" . $rowQuestion[0] . "</div>";
-        $i = 0;
+        $answerId = 1;
         while ($rowAnswer = mysqli_fetch_array($resultAnswers)) {
-            echo "<div class='answer'>" . $rowAnswer[0] . "</div>";
-            $i++;
-            if($i == 4) break;
+            echo "  <div>
+                        <input type='radio' required value='" . $questionId . "_" . $answerId . "' id='answer" . $questionId . $answerId . "'  name='answer" . $questionId . "'>
+                        <label class='answer' for='answer" . $questionId . $answerId . "'>" . $rowAnswer[0] . "</label>
+                    </div>";
+            $answerId++;
+            if($answerId == 5) break;
         }
+        $questionId++;
     }
     ?>
+    <input type="hidden" name="test" value="1">
+    <input type="submit" value="Отправить" class="send-result">
+    </form>
 </div>
 </body>
 </html>
