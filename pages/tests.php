@@ -1,9 +1,8 @@
 <?
 session_start();
 if(!$_SESSION['login']){
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ../');
 }
-
 require_once "../php/connection.php";
 $login = $_SESSION['login'];
 $query = "(SELECT id FROM users WHERE login='$login')";
@@ -15,14 +14,18 @@ $resultTestId = mysqli_query($connection, $query);
 $testId = mysqli_fetch_array($resultTestId);
 $isFirstDone = $isSecondDone = $isThirdDone = 0;
 for($i = 0; $i < count($testId); $i++){
-    if($testId[$i][0] == 1)
+    if($testId[$i][0] == 1){
         $isFirstDone = 1;
-    else
-        if($testId[$i][0] == 2)
-            $isSecondDone = 1;
-    else
-        if($testId[$i][0] == 3)
-            $isThirdDone = 1;
+        $_SESSION['test1'] = 1;
+    }
+    else if($testId[$i][0] == 2){
+        $isSecondDone = 1;
+        $_SESSION['test2'] = 1;
+    }
+    else if($testId[$i][0] == 3){
+        $isThirdDone = 1;
+        $_SESSION['test3'] = 1;
+    }
 }
 ?>
 

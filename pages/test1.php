@@ -1,7 +1,11 @@
 <?
 session_start();
 if(!$_SESSION['login']){
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ../');
+}
+
+if($_SESSION['test1'] == "1"){
+    header('Location: tests.php');
 }
 
 require_once "../php/connection.php";

@@ -1,6 +1,11 @@
 <?
+session_start();
 if(!$_SESSION['login']){
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ../');
+}
+
+if($_SESSION['test3'] == "1"){
+    header('Location: tests.php');
 }
 
 ?>
