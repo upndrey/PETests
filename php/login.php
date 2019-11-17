@@ -7,7 +7,10 @@ $rows = mysqli_fetch_array($result);
 if($rows){
     session_start();
     $_SESSION['login'] = $login;
-    header('Location: /pages/tests.php');
+    if($login == "admin")
+        header('Location: /pages/admin.php');
+    else
+        header('Location: /pages/tests.php');
     exit;
 }
 else

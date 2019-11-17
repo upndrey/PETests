@@ -9,8 +9,8 @@ if($_SESSION['test1'] == "1"){
 }
 
 require_once "../php/connection.php";
-$resultQuestions = mysqli_query($connection, "(SELECT text FROM questions)");
-$resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants)");
+$resultQuestions = mysqli_query($connection, "(SELECT text FROM questions WHERE test_id=1)");
+$resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WHERE test_id=1)");
 ?>
 
 <!doctype html>

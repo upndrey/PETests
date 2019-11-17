@@ -8,6 +8,9 @@ if($_SESSION['test2'] == "1"){
     header('Location: tests.php');
 }
 
+require_once "../php/connection.php";
+$resultQuestions = mysqli_query($connection, "(SELECT text FROM questions WHERE test_id=2)");
+$resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WHERE test_id=2)");
 ?>
 
 <!doctype html>
@@ -24,16 +27,37 @@ if($_SESSION['test2'] == "1"){
     <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-
-<div class="container tests">
-    <h2>Выберите тест:</h2>
-    <a href="test1.php" class="test-link">Тест 1</a>
-    <a href="test2.php" class="test-link">Тест 2</a>
-    <a href="test3.php" class="test-link">Тест 3</a>
-    <div class="test-help">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+<header class="tests-header">
+    <div class="container">
+        <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
+        <div class="tests-header-links">
+            <a href="" class="username"><? echo $_SESSION['login']; ?></a>
+            <a href="../" class="logout">Выход</a>
+        </div>
     </div>
+</header>
+<div class="container tests">
+    <form action="../php/sendResult.php" method="post" class="test">
+        <h2>Тест 2:</h2>
+        <?
+        $questionId = 0;
+        while ($rowQuestion = mysqli_fetch_array($resultQuestions)) {
+            echo "<div class='question'>" . $rowQuestion[0] . " Вопрос</div>";
+            $answerId = 1;
+            while ($rowAnswer = mysqli_fetch_array($resultAnswers)) {
+                echo "  <div>
+                        <input type='radio' required value='" . $questionId . "_" . $answerId . "' id='answer" . $questionId . $answerId . "'  name='answer" . $questionId . "'>
+                        <label class='answer' for='answer" . $questionId . $answerId . "'>" . $rowAnswer[0] . "</label>
+                    </div>";
+                $answerId++;
+                if($answerId == 5) break;
+            }
+            $questionId++;
+        }
+        ?>
+        <input type="hidden" name="test" value="2">
+        <input type="submit" value="Отправить" class="send-result">
+    </form>
 </div>
 </body>
 </html>

@@ -2,6 +2,9 @@
 session_start();
 if($_SESSION['login'] != NULL){
     $_SESSION['login'] = NULL;
+    $_SESSION['test1'] = NULL;
+    $_SESSION['test2'] = NULL;
+    $_SESSION['test3'] = NULL;
 }
 
 require_once "partials/header.php";

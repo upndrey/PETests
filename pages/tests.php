@@ -11,20 +11,40 @@ $loginId = mysqli_fetch_array($resultLoginId);
 
 $query = "(SELECT test_id FROM results WHERE user_id='$loginId[0]')";
 $resultTestId = mysqli_query($connection, $query);
-$testId = mysqli_fetch_array($resultTestId);
 $isFirstDone = $isSecondDone = $isThirdDone = 0;
-for($i = 0; $i < count($testId); $i++){
-    if($testId[$i][0] == 1){
+while($testId = mysqli_fetch_array($resultTestId)){
+    if($testId[0] == 1){
         $isFirstDone = 1;
         $_SESSION['test1'] = 1;
+        $query = "(SELECT id FROM users WHERE login='$login')";
+        $resultUserId = mysqli_query($connection, $query);
+        $userId = mysqli_fetch_array($resultUserId);
+
+        $query = "(SELECT points FROM results WHERE user_id='$userId[0]' AND test_id=1)";
+        $resultPoints = mysqli_query($connection, $query);
+        $points1 = mysqli_fetch_array($resultPoints);
     }
-    else if($testId[$i][0] == 2){
+    else if($testId[0] == 2){
         $isSecondDone = 1;
         $_SESSION['test2'] = 1;
+        $query = "(SELECT id FROM users WHERE login='$login')";
+        $resultUserId = mysqli_query($connection, $query);
+        $userId = mysqli_fetch_array($resultUserId);
+
+        $query = "(SELECT points FROM results WHERE user_id='$userId[0]' AND test_id=2)";
+        $resultPoints = mysqli_query($connection, $query);
+        $points2 = mysqli_fetch_array($resultPoints);
     }
-    else if($testId[$i][0] == 3){
+    else if($testId[0] == 3){
         $isThirdDone = 1;
         $_SESSION['test3'] = 1;
+        $query = "(SELECT id FROM users WHERE login='$login')";
+        $resultUserId = mysqli_query($connection, $query);
+        $userId = mysqli_fetch_array($resultUserId);
+
+        $query = "(SELECT points FROM results WHERE user_id='$userId[0]' AND test_id=3)";
+        $resultPoints = mysqli_query($connection, $query);
+        $points3 = mysqli_fetch_array($resultPoints);
     }
 }
 ?>
@@ -55,8 +75,11 @@ for($i = 0; $i < count($testId); $i++){
 <div class="container tests">
     <h2>Выберите тест:</h2>
     <a href="test1.php" class="test-link <? if($isFirstDone) echo " test-done" ?>">Тест 1</a>
+    <? if($isFirstDone) echo "<div class='test-done-after'>Тест пройден, ваши баллы: " . $points1[0] . "</div>" ?>
     <a href="test2.php" class="test-link <? if($isSecondDone) echo " test-done" ?>">Тест 2</a>
+    <? if($isSecondDone) echo "<div class='test-done-after'>Тест пройден, ваши баллы: " . $points2[0] . "</div>" ?>
     <a href="test3.php" class="test-link <? if($isThirdDone) echo " test-done" ?>">Тест 3</a>
+    <? if($isThirdDone) echo "<div class='test-done-after'>Тест пройден.</div>" ?>
     <div class="test-help">
         Пройденные тесты будут отмечены <span class="special-color">специальным цветом</span>, дважды один тест пройти нельзя.
     </div>
