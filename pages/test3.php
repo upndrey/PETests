@@ -47,18 +47,42 @@ require_once "../php/connection.php";
             while ($rowAnswer = mysqli_fetch_array($resultAnswers)) {
                 if($rowQuestion[1] == 'radio')
                     echo "  <div>
-                                <input type='" . $rowQuestion[1] . "' required id='answer" . $questionId . $answerId . "'  name='answer" . $questionId . "'>
-                                <label class='answer' for='answer" . $questionId . $answerId . "'>" . $rowAnswer[0] . "</label>
+                                <input 
+                                    type='" . $rowQuestion[1] . "'  
+                                    value='" . $questionId . "_" . $answerId . "'
+                                    required 
+                                    id='answer" . $questionId . $answerId . "'  
+                                    name='answer" . $questionId . "' 
+                                />
+                                <label 
+                                    class='answer' 
+                                    for='answer" . $questionId . $answerId . "'>"
+                                        . $rowAnswer[0] . "
+                                </label>
                             </div>";
                 else if($rowQuestion[1] == 'checkbox')
                     echo "  <div>
-                                <input type='" . $rowQuestion[1] . "' id='answer" . $questionId . $answerId . "'  name='answer" . $questionId . "'>
-                                <label class='answer' for='answer" . $questionId . $answerId . "'>" . $rowAnswer[0] . "</label>
+                                <input 
+                                    type='" . $rowQuestion[1] . "'  
+                                    value='" . $questionId . "_" . $answerId . "' 
+                                    id='answer" . $questionId . $answerId . "'  
+                                    name='someAnswers" . $questionId . $answerId . "' 
+                                />
+                                <label 
+                                    class='answer' 
+                                    for='answer" . $questionId . $answerId . "'>"
+                                        . $rowAnswer[0] . "
+                                </label>
                             </div>";
-                else if($rowQuestion[1] == 'text')
+                else if($rowQuestion[1] == 'text'){
                     echo "  <div>
-                                <input type='" . $rowQuestion[1] . "' required id='answer" . $questionId . $answerId . "'  name='answer" . $questionId . "'>
+                                <textarea 
+                                    required 
+                                    id='answer" . $questionId . $answerId . "'  
+                                    name='textAnswer" . $questionId . "'>
+                                </textarea>
                             </div>";
+                }
                 $answerId++;
             }
             $questionId++;

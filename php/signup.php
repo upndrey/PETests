@@ -11,6 +11,8 @@ if(!$result){
     $query = "INSERT INTO results (user_id, test_id, points) VALUES ('$loginId[0]', $testId, '$weightsSum')";
     $query = "INSERT INTO users (login, password) VALUES ('$login', '$pass')";
     mysqli_query($connection, $query);
+    session_start();
+    $_SESSION['login'] = $login;
     header('Location: ' . $_SERVER['HTTP_REFERER'] . 'pages/tests.php');
 }
 else

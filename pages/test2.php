@@ -40,7 +40,7 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
     <form action="../php/sendResult.php" method="post" class="test">
         <h2>Тест 2:</h2>
         <?
-        $questionId = 0;
+        $questionId = 1;
         while ($rowQuestion = mysqli_fetch_array($resultQuestions)) {
             echo "<div class='question'>" . $rowQuestion[0] . " Вопрос</div>";
             $answerId = 1;
