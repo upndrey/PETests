@@ -33,22 +33,25 @@ $loginId = mysqli_fetch_array($resultLoginId);
         </div>
     </div>
 </header>
-<div class="container tests">
+<div class="container tests admin-panel">
     <h2>Админ панель:</h2>
-    <?
-    $query = "(SELECT id, login FROM users)";
-    $resultUsers = mysqli_query($connection, $query);
-    while ($users = mysqli_fetch_array($resultUsers)) {
-        echo $users[1] . "<br>";
-        $query = "(SELECT points FROM results WHERE user_id='$users[0]')";
-        $resultPoints = mysqli_query($connection, $query);
-        while ($points = mysqli_fetch_array($resultPoints)) {
-            echo $points[0] . "<br>";
-        }
-    }
-    ?>
+    <div class="groupsController">
+        <form action="../php/admin.php" class="addGroupBlock" method="post">
+            <label for="groupName">Добавить группу:</label>
+            <input type="text" required name="groupName" id="groupName" placeholder="Введите название группы"/>
+            <input type="submit" name="sendGroup">
+        </form>
+
+        <div class="groupList">
+            <?
+            $groupsResult = mysqli_query($connection, "(SELECT name FROM groups)");
+            while ($groups = mysqli_fetch_array($groupsResult)) {
+                echo "<div class='group'>" . $groups[0] . "</div>";
+            }
+            ?>
+        </div>
+    </div>
 </div>
 
-<script src="../scripts/index.js"></script>
 </body>
 </html>

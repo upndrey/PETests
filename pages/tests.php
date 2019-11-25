@@ -85,6 +85,5 @@ while($testId = mysqli_fetch_array($resultTestId)){
     </div>
 </div>
 
-<script src="../scripts/index.js"></script>
 </body>
 </html>

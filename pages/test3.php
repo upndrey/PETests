@@ -77,10 +77,10 @@ require_once "../php/connection.php";
                 else if($rowQuestion[1] == 'text'){
                     echo "  <div>
                                 <textarea 
+                                    placeholder='' 
                                     required 
                                     id='answer" . $questionId . $answerId . "'  
-                                    name='textAnswer" . $questionId . "'>
-                                </textarea>
+                                    name='textAnswer" . $questionId . "'></textarea>                           
                             </div>";
                 }
                 $answerId++;

@@ -1,0 +1,20 @@
+<?php
+
+session_start();
+if(!$_SESSION['login']){
+    header('Location: ../');
+}
+
+require_once "../php/connection.php";
+
+if(isset($_POST["groupName"])){
+    $group = $_POST['groupName'];
+    $query = "(SELECT id FROM groups WHERE name='$group')";
+    $result = mysqli_query($connection, $query);
+    $ids = mysqli_fetch_array($result);
+    if(!$ids){
+        $query = "INSERT INTO groups (name) VALUES ('$group')";
+        mysqli_query($connection, $query);
+    }
+}
+header('Location: ' . $_SERVER['HTTP_SERVER'] . '/pages/admin.php');

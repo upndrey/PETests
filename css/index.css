@@ -149,7 +149,7 @@ p{
     margin-bottom: 10px;
 }
 
-.login-container form input:not([type="submit"]){
+.login-container form input:not([type="submit"]), .login-container form select{
     padding: 10px;
     margin-bottom: 10px;
 }
@@ -304,7 +304,7 @@ p{
     position: absolute;
 }
 
-input[type=radio]:checked + label, input[type=checkbox]:checked + label {
+.tests input[type=radio]:checked + label, input[type=checkbox]:checked + label {
     color: white;
     background: #25ae88;
     border: 1px solid transparent;
@@ -315,8 +315,17 @@ input[type=radio]:checked + label, input[type=checkbox]:checked + label {
     padding: 10px;
 }
 
-input[type=text] + label{
+.tests input[type=text] + label{
     display: none;
+}
+
+.tests textarea{
+    width: calc(100% - 20px);
+    height: 150px;
+    margin: 10px auto 0 auto;
+    padding: 10px;
+    resize: none; /* Запрещаем изменять размер */
+    font-size: 16px;
 }
 
 .test .send-result{
@@ -336,4 +345,38 @@ input[type=text] + label{
     border: 1px solid #25ae88;
     background: white;
     color: #25ae88;
+}
+
+/* admin */
+.groupsController{
+    display: flex;
+    flex-direction: row;
+    height: 275px;
+}
+
+.addGroupBlock{
+    border: 1px solid white;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.addGroupBlock input[type=submit]{
+    margin: 10px 0;
+    padding: 5px 10px;
+    border: 1px solid #000;
+}
+
+.groupList{
+    border: 1px solid white;
+    padding: 25px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.groupList .group{
+    margin: 10px;
 }
