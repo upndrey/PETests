@@ -1,52 +1,17 @@
 <?
-session_start();
-if(!$_SESSION['login']){
-    header('Location: ../');
-}
-require_once "../php/connection.php";
-$login = $_SESSION['login'];
-$query = "(SELECT id FROM users WHERE login='$login')";
-$resultLoginId = mysqli_query($connection, $query);
-$loginId = mysqli_fetch_array($resultLoginId);
-
-$query = "(SELECT test_id FROM results WHERE user_id='$loginId[0]')";
-$resultTestId = mysqli_query($connection, $query);
-$isFirstDone = $isSecondDone = $isThirdDone = 0;
-while($testId = mysqli_fetch_array($resultTestId)){
-    if($testId[0] == 1){
-        $isFirstDone = 1;
-        $_SESSION['test1'] = 1;
-        $query = "(SELECT id FROM users WHERE login='$login')";
-        $resultUserId = mysqli_query($connection, $query);
-        $userId = mysqli_fetch_array($resultUserId);
-
-        $query = "(SELECT points FROM results WHERE user_id='$userId[0]' AND test_id=1)";
-        $resultPoints = mysqli_query($connection, $query);
-        $points1 = mysqli_fetch_array($resultPoints);
+    session_start();
+    if(!$_SESSION['login']){
+        header('Location: ../');
     }
-    else if($testId[0] == 2){
-        $isSecondDone = 1;
-        $_SESSION['test2'] = 1;
-        $query = "(SELECT id FROM users WHERE login='$login')";
-        $resultUserId = mysqli_query($connection, $query);
-        $userId = mysqli_fetch_array($resultUserId);
+    require_once "../php/connection.php";
+    $login = $_SESSION['login'];
+    $query = "(SELECT id FROM users WHERE login='$login')";
+    $resultLoginId = mysqli_query($connection, $query);
+    $loginId = mysqli_fetch_array($resultLoginId);
 
-        $query = "(SELECT points FROM results WHERE user_id='$userId[0]' AND test_id=2)";
-        $resultPoints = mysqli_query($connection, $query);
-        $points2 = mysqli_fetch_array($resultPoints);
-    }
-    else if($testId[0] == 3){
-        $isThirdDone = 1;
-        $_SESSION['test3'] = 1;
-        $query = "(SELECT id FROM users WHERE login='$login')";
-        $resultUserId = mysqli_query($connection, $query);
-        $userId = mysqli_fetch_array($resultUserId);
+    $query = "(SELECT id FROM users WHERE login='$login')";
+    $resultTest = mysqli_query($connection, $query);
 
-        $query = "(SELECT points FROM results WHERE user_id='$userId[0]' AND test_id=3)";
-        $resultPoints = mysqli_query($connection, $query);
-        $points3 = mysqli_fetch_array($resultPoints);
-    }
-}
 ?>
 
 <!doctype html>
@@ -74,14 +39,79 @@ while($testId = mysqli_fetch_array($resultTestId)){
 </header>
 <div class="container tests">
     <h2>Выберите тест:</h2>
-    <a href="test1.php" class="test-link <? if($isFirstDone) echo " test-done" ?>">Тест 1</a>
-    <? if($isFirstDone) echo "<div class='test-done-after'>Тест пройден, ваши баллы: " . $points1[0] . "</div>" ?>
-    <a href="test2.php" class="test-link <? if($isSecondDone) echo " test-done" ?>">Тест 2</a>
-    <? if($isSecondDone) echo "<div class='test-done-after'>Тест пройден, ваши баллы: " . $points2[0] . "</div>" ?>
-    <a href="test3.php" class="test-link <? if($isThirdDone) echo " test-done" ?>">Тест 3</a>
-    <? if($isThirdDone) echo "<div class='test-done-after'>Тест пройден.</div>" ?>
+    <?
+    $testId = 1;
+    while ($testId != 4) {
+        $i = 1;
+        for(; $i <= 4; $i++){
+            $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$i')";
+            $resultDate = mysqli_query($connection, $query);
+            $rowDate = mysqli_fetch_array($resultDate);
+
+            $currDate = date_create()->format('U');
+            $dateStart = date_create_from_format ("d.m.Y", $rowDate[0])->format('U');
+            $dateEnd = date_create_from_format ("d.m.Y", $rowDate[1])->format('U');
+
+            if($currDate >= $dateStart && $currDate <= $dateEnd)
+                break;
+        }
+
+        $query = "(SELECT * FROM results WHERE user_id='$loginId[0]' AND test_id='$testId' AND block_id='$i')";
+        $resultBlock = mysqli_query($connection, $query);
+        $rowBlock = mysqli_fetch_array($resultBlock);
+        if($rowBlock)
+            $isTestDone = 1;
+        else
+            $isTestDone = 0;
+        if($isTestDone)
+            echo "<a href='test" . $testId . ".php' class='test-link test-done'>Тест " . $testId . "</a>";
+        else
+            echo "<a href='test" . $testId . ".php' class='test-link'>Тест " . $testId . "</a>";
+        $blockId = 1;
+        echo "<div class='test-block'>";
+        while ($blockId != 5) {
+            $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
+            $resultBlock = mysqli_query($connection, $query);
+            $rowBlock = mysqli_fetch_array($resultBlock);
+            //Отмечаем пройденные тесты
+            $currDate = date_create()->format('U');
+            $dateEnd = date_create_from_format ("d.m.Y", $rowBlock[1])->format('U');
+            if($currDate > $dateEnd)
+                $isDone = 1;
+            else
+                $isDone = 0;
+
+
+            //Отмечаем, что блок ещё не готов к прохождению
+            $dateStart = date_create_from_format ("d.m.Y", $rowBlock[0])->format('U');
+            if($currDate < $dateStart)
+                $isClosed = 1;
+            else
+                $isClosed = 0;
+
+
+            //Отмечаем нынешний тест, если он пройден
+            $query = "(SELECT * FROM results WHERE user_id='$loginId[0]' AND test_id='$testId' AND block_id='$blockId')";
+            $resultBlock = mysqli_query($connection, $query);
+            $rowBlock = mysqli_fetch_array($resultBlock);
+
+            if($rowBlock)
+                $isDone = 1;
+            if($isDone)
+                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . "</div>";
+            else if($isClosed)
+                echo "<div class='block-elem closed-block-elem'>Блок " . $blockId . "</div>";
+            else
+                echo "<div class='block-elem'>Блок " . $blockId . "</div>";
+            $blockId++;
+        }
+        echo "</div>";
+        $testId++;
+    }
+
+    ?>
     <div class="test-help">
-        Пройденные тесты будут отмечены <span class="special-color">специальным цветом</span>, дважды один тест пройти нельзя.
+        Пройденные блоки будут отмечены <span class="special-color">специальным цветом</span>, дважды один блок пройти нельзя.
     </div>
 </div>
 

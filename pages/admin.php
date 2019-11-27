@@ -51,6 +51,11 @@ $loginId = mysqli_fetch_array($resultLoginId);
             ?>
         </div>
     </div>
+
+    <form action="../php/admin.php" class="saveExcelBlock" method="post">
+        <input type="hidden" name="saveResult" value="1">
+        <input type="submit" name="sendResult">
+    </form>
 </div>
 
 </body>

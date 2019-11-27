@@ -117,9 +117,25 @@
         if($tempWeights[0])
             $weightsSum += $tempWeights[0];
     }
+    $date = getdate();
+    $i = 1;
+    for(; $i <= 4; $i++){
+        $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$i')";
+        $resultDate = mysqli_query($connection, $query);
+        $rowDate = mysqli_fetch_array($resultDate);
 
+        $currDate = date_create()->format('U');
+        $dateStart = date_create_from_format ("d.m.Y", $rowDate[0])->format('U');
+        $dateEnd = date_create_from_format ("d.m.Y", $rowDate[1])->format('U');
+
+        if($currDate >= $dateStart && $currDate <= $dateEnd)
+            break;
+    }
+
+
+    $dateResult = $date['mday'] . "." . $date['mon'] . "." . $date['year'];
     //Записываем сумму баллов в результат
-    $query = "INSERT INTO results (user_id, test_id, points) VALUES ('$loginId[0]', $testId, '$weightsSum')";
+    $query = "INSERT INTO results (user_id, test_id, points, block_id, date) VALUES ('$loginId[0]', $testId, '$weightsSum', '$i', '$dateResult')";
     mysqli_query($connection, $query);
 
     for($i = 0; $i < count($answerIds); $i++){
