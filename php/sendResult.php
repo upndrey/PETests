@@ -55,6 +55,20 @@
     $testId = $_POST['test'];
 
 
+    $date = getdate();
+    $block_id = 1;
+    for(; $block_id <= 4; $block_id++){
+        $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$block_id')";
+        $resultDate = mysqli_query($connection, $query);
+        $rowDate = mysqli_fetch_array($resultDate);
+
+        $currDate = date_create()->format('U');
+        $dateStart = date_create_from_format ("d.m.Y", $rowDate[0])->format('U');
+        $dateEnd = date_create_from_format ("d.m.Y", $rowDate[1])->format('U');
+
+        if($currDate >= $dateStart && $currDate <= $dateEnd)
+            break;
+    }
 
 
     if($someResults){
@@ -71,7 +85,7 @@
         for($i = 0; $i < count($answerIds); $i++){
             $tempAnswerId = $answerIds[$i];
             //Записываем варианты ответов пользователя
-            $query = "INSERT INTO answers (user_id, answer_variant_id) VALUES ('$loginId[0]', '$tempAnswerId[0]')";
+            $query = "INSERT INTO answers (user_id, answer_variant_id, block_id) VALUES ('$loginId[0]', '$tempAnswerId[0]', '$block_id')";
             mysqli_query($connection, $query);
         }
 
@@ -88,7 +102,7 @@
             $tempAnswerId = $answerIds[$i];
             $tempTextResult = $textResult[$i];
             //Записываем варианты ответов пользователя
-            $query = "INSERT INTO answers (user_id, answer_variant_id, text) VALUES ('$loginId[0]', '$tempAnswerId[0]', '$tempTextResult[0]')";
+            $query = "INSERT INTO answers (user_id, answer_variant_id, text, block_id) VALUES ('$loginId[0]', '$tempAnswerId[0]', '$tempTextResult[0]', '$block_id')";
             mysqli_query($connection, $query);
         }
 
@@ -117,31 +131,37 @@
         if($tempWeights[0])
             $weightsSum += $tempWeights[0];
     }
-    $date = getdate();
-    $i = 1;
-    for(; $i <= 4; $i++){
-        $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$i')";
-        $resultDate = mysqli_query($connection, $query);
-        $rowDate = mysqli_fetch_array($resultDate);
-
-        $currDate = date_create()->format('U');
-        $dateStart = date_create_from_format ("d.m.Y", $rowDate[0])->format('U');
-        $dateEnd = date_create_from_format ("d.m.Y", $rowDate[1])->format('U');
-
-        if($currDate >= $dateStart && $currDate <= $dateEnd)
-            break;
-    }
-
+    $level = '';
+    if($weightsSum >= 91)
+        $level = "ОРГАНИЧЕСКАЯ";
+    else if($weightsSum >= 81)
+        $level = "УСТОЙЧИВАЯ";
+    else if($weightsSum >= 71)
+        $level = "СИЛЬНАЯ";
+    else if($weightsSum >= 61)
+        $level = "УМЕРЕННАЯ";
+    else if($weightsSum >= 51)
+        $level = "НЕУСТОЙЧИВАЯ";
+    else if($weightsSum >= 41)
+        $level = "СЛУЧАЙНАЯ";
+    else if($weightsSum >= 31)
+        $level = "СЛАБАЯ";
+    else if($weightsSum >= 21)
+        $level = "ОЧЕНЬ СЛАБАЯ";
+    else if($weightsSum >= 11)
+        $level = "СОСЛАГАТЕЛЬНАЯ";
+    else if($weightsSum >= 0)
+        $level = "ЗАЧАТОЧНАЯ";
 
     $dateResult = $date['mday'] . "." . $date['mon'] . "." . $date['year'];
     //Записываем сумму баллов в результат
-    $query = "INSERT INTO results (user_id, test_id, points, block_id, date) VALUES ('$loginId[0]', $testId, '$weightsSum', '$i', '$dateResult')";
+    $query = "INSERT INTO results (user_id, test_id, points, block_id, date, level) VALUES ('$loginId[0]', $testId, '$weightsSum', '$block_id', '$dateResult', '$level')";
     mysqli_query($connection, $query);
 
     for($i = 0; $i < count($answerIds); $i++){
         $tempAnswerId = $answerIds[$i];
         //Записываем варианты ответов пользователя
-        $query = "INSERT INTO answers (user_id, answer_variant_id) VALUES ('$loginId[0]', '$tempAnswerId[0]')";
+        $query = "INSERT INTO answers (user_id, answer_variant_id, block_id) VALUES ('$loginId[0]', '$tempAnswerId[0]', '$block_id')";
         mysqli_query($connection, $query);
     }
 
