@@ -1,6 +1,6 @@
 <?
 session_start();
-if(!$_SESSION['login']){
+if(!$_SESSION['login'] || $_SESSION['login'] != 'admin'){
     header('Location: ../');
 }
 require_once "../php/connection.php";

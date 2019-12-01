@@ -1,4 +1,8 @@
 <?php
+
+if(!$_SESSION['login'] || $_SESSION['login'] != 'admin'){
+    header('Location: ../');
+}
 // Подключаем класс для работы с excel
 require_once('../Classes/PHPExcel.php');
 // Подключаем класс для вывода данных в формате excel
