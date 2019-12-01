@@ -39,22 +39,31 @@ $loginId = mysqli_fetch_array($resultLoginId);
         <form action="../php/admin.php" class="addGroupBlock" method="post">
             <label for="groupName">Добавить группу:</label>
             <input type="text" required name="groupName" id="groupName" placeholder="Введите название группы"/>
-            <input type="submit" name="sendGroup">
+            <input type="submit" name="sendGroup" value="Добавить">
         </form>
-
-        <div class="groupList">
-            <?
-            $groupsResult = mysqli_query($connection, "(SELECT name FROM groups)");
-            while ($groups = mysqli_fetch_array($groupsResult)) {
-                echo "<div class='group'>" . $groups[0] . "</div>";
-            }
-            ?>
-        </div>
+        <form action="../php/admin.php" class="delGroup" method="post">
+            <div class="groupList">
+                <label>Выберите группы для удаления:</label>
+                <?
+                $groupsResult = mysqli_query($connection, "(SELECT name, id FROM groups)");
+                $i = 0;
+                while ($groups = mysqli_fetch_array($groupsResult)) {
+                    echo "
+                        <input id='group" . $groups[1] . "' type='checkbox' name='group" . $i . "' value = '" . $groups[1] . "'/>
+                        <label class='group' for='group" . $groups[1] . "'>" . $groups[0] . "</label>         
+                            ";
+                    $i++;
+                }
+                ?>
+            </div>
+            <input type="hidden" name="removeGroups" value="<? echo $i; ?>">
+            <input type="submit" value="Удалить">
+        </form>
     </div>
 
     <form action="../php/admin.php" class="saveExcelBlock" method="post">
         <input type="hidden" name="saveResult" value="1">
-        <input type="submit" name="sendResult">
+        <input type="submit" name="sendResult" value="Скачать excel">
     </form>
 </div>
 

@@ -382,6 +382,7 @@ p{
 .groupsController{
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
     height: 275px;
 }
 
@@ -393,13 +394,22 @@ p{
     align-items: flex-start;
 }
 
-.addGroupBlock input[type=submit]{
+.admin-panel input[type=submit]{
     margin: 10px 0;
     padding: 5px 10px;
     border: 1px solid #000;
 }
 
+.admin-panel input[type=submit]:hover{
+    cursor: pointer;
+    background: #000;
+    color: #ffffff;
+    border: 1px solid transparent;
+}
+
 .groupList{
+    box-sizing: border-box;
+    height: 275px;
     border: 1px solid white;
     padding: 25px;
     overflow-y: scroll;
@@ -409,5 +419,8 @@ p{
 }
 
 .groupList .group{
+    border: 1px solid #000;
+    width: calc(100% - 20px);
+    padding: 10px;
     margin: 10px;
 }
