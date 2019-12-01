@@ -1,7 +1,9 @@
 <?php
 require_once "./connection.php";
 $login = $_POST['login'];
+$login = mysqli_real_escape_string($connection, $login);
 $pass = $_POST['pass'];
+$pass = mysqli_real_escape_string($connection, $pass);
 $result = mysqli_query($connection, "(SELECT id FROM users WHERE login='$login' AND password='$pass')");
 $rows = mysqli_fetch_array($result);
 if($rows){

@@ -11,10 +11,12 @@
     while(1){
         if(isset($_POST['answer' . $i])){
             $result[$i1] = $_POST['answer' . $i];
+            $result[$i1] = mysqli_real_escape_string($connection, $result[$i1]);
             $i1++;
         }
         else if(isset($_POST['textAnswer' . $i])){
             $textResult[$i2][0] = $_POST['textAnswer' . $i];
+            $textResult[$i2][0] = mysqli_real_escape_string($connection, $textResult[$i2][0]);
             $textResult[$i2][1] = $i;
             $i2++;
         }
@@ -23,6 +25,7 @@
             while(1){
                 if(isset($_POST['someAnswers' . $i . $j])){
                     $someResults[$i3] = $_POST['someAnswers' . $i . $j];
+                    $someResults[$i3] = mysqli_real_escape_string($connection, $someResults[$i3]);
                     $i3++;
                     $isEndFlag = 0;
                 }
@@ -53,6 +56,7 @@
 
     $loginId = mysqli_fetch_array($resultLoginId);
     $testId = $_POST['test'];
+    $testId = mysqli_real_escape_string($connection, $testId);
 
 
     $date = getdate();
