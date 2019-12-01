@@ -63,10 +63,14 @@
             $isTestDone = 1;
         else
             $isTestDone = 0;
-        if($isTestDone)
+        if($isTestDone){
+            $_SESSION['test' . $testId] = 1;
             echo "<a href='test" . $testId . ".php' class='test-link test-done'>Тест " . $testId . "</a>";
-        else
+        }
+        else{
+            $_SESSION['test' . $testId] = NULL;
             echo "<a href='test" . $testId . ".php' class='test-link'>Тест " . $testId . "</a>";
+        }
         $blockId = 1;
         echo "<div class='test-block'>";
         while ($blockId != 5) {

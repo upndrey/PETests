@@ -239,6 +239,7 @@ p{
 .tests .test-done{
     color: #ffffff;
     background: #25ae88;
+    pointer-events: none;
 }
 
 .tests .test-link:hover{
@@ -280,9 +281,8 @@ p{
 }
 
 .test-block .block-elem:hover{
-    cursor: pointer;
-    color: #ffffff;
-    background: #043965;
+    border-top: 1px solid #043965;
+    background: #fff;
 }
 
 .test-block .done-block-elem{
