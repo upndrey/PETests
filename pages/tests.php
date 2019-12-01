@@ -5,12 +5,9 @@
     }
     require_once "../php/connection.php";
     $login = $_SESSION['login'];
-    $query = "(SELECT id FROM users WHERE login='$login')";
+    $query = "(SELECT id, firstName, lastName FROM users WHERE login='$login')";
     $resultLoginId = mysqli_query($connection, $query);
     $loginId = mysqli_fetch_array($resultLoginId);
-
-    $query = "(SELECT id FROM users WHERE login='$login')";
-    $resultTest = mysqli_query($connection, $query);
 
 ?>
 
@@ -32,7 +29,7 @@
     <div class="container">
         <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
         <div class="tests-header-links">
-            <a href="" class="username"><? echo $login; ?></a>
+            <div class="username"><? echo $loginId[1] . " " . $loginId[2]; ?></div>
             <a href="../" class="logout">Выход</a>
         </div>
     </div>

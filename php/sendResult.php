@@ -3,6 +3,8 @@
     if(!$_SESSION['login']){
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
+
+    require_once "../php/connection.php";
     $i = 1;
     $i1 = 0;
     $i2 = 0;
@@ -48,7 +50,6 @@
             $someResults[$i] = explode("_", $someResults[$i]);
         }
     }
-    require_once "../php/connection.php";
 
     $login = $_SESSION['login'];
     $query = "(SELECT id FROM users WHERE login='$login')";
