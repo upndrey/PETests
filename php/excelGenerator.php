@@ -11,6 +11,15 @@ require_once('../Classes/PHPExcel/Writer/Excel5.php');
 // Создаем объект класса PHPExcel
 $xls = new PHPExcel();
 
+
+
+$styleArray = array(
+    'borders' => array(
+        'allborders' => array(
+            'style' => PHPExcel_Style_Border::BORDER_THIN
+        )
+    )
+);
 //  Уровень потребности
 /////////////////////////////// Оценка знаний ФК /////////////////////////////////////////
 // Устанавливаем индекс активного листа
@@ -455,6 +464,109 @@ while($group = mysqli_fetch_array($resultGroups)){
             }
         }
 
+        $i++;
+    }
+}
+
+
+/////////////////////////////// Теория ответы /////////////////////////////////////////
+// Устанавливаем индекс активного листа
+$xls->createSheet();
+$xls->setActiveSheetIndex(3);
+// Получаем активный лист
+$sheet = $xls->getActiveSheet();
+// Подписываем лист
+$sheet->setTitle('Теория ответы');
+
+for($col = 'A'; $col <= 'Z'; $col++) {
+    $sheet->getColumnDimension($col)->setWidth(20);
+}
+// Вставляем текст в ячейку A1
+$sheet->setCellValue("A1", 'Группа');
+$sheet->getStyle('A1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('A1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+// Вставляем текст в ячейку B1
+$sheet->setCellValue("B1", 'Ф.И.О.');
+$sheet->getStyle('B1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('B1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$query = "(SELECT name FROM groups)";
+$resultGroups = mysqli_query($connection, $query);
+$i = 3;
+
+while($group = mysqli_fetch_array($resultGroups)){
+    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
+    $resultUsers = mysqli_query($connection, $query);
+
+    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+
+        // Выводим группу
+        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
+        // Применяем выравнивание
+        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        // Выводим имя и фамилию
+        $userName = $usersInfo[1] . " " . $usersInfo[0];
+        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+        $temp = 2;
+        for($j = 1; $j <= 4; $j++){
+
+            $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
+            $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 9, 1);
+            $sheet->getStyleByColumnAndRow($temp, 1, $temp + 9, 1)->applyFromArray($styleArray);
+
+            $query = "(SELECT question_type, text FROM questions WHERE test_id='3')";
+            $resultQuestions = mysqli_query($connection, $query);
+            $questionId = 1;
+            while($questions = mysqli_fetch_array($resultQuestions)) {
+                $sheet->setCellValueByColumnAndRow($temp, 2, $questions[1]);
+                $answerStr = "";
+                if($questions[0] == 'text'){
+                    $query = "(SELECT id FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
+                    $resultAnswerVariants = mysqli_query($connection, $query);
+                    $answerVariants = mysqli_fetch_array($resultAnswerVariants);
+                    $query = "(SELECT text FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
+                    $resultAnswer = mysqli_query($connection, $query);
+                    if($answer = mysqli_fetch_array($resultAnswer))
+                        $answerStr = $answer[0];
+                }
+                else if($questions[0] == 'radio'){
+                    $query = "(SELECT id, text FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
+                    $resultAnswerVariants = mysqli_query($connection, $query);
+                    while($answerVariants = mysqli_fetch_array($resultAnswerVariants)){
+                        $query = "(SELECT id FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
+                        $resultAnswer = mysqli_query($connection, $query);
+                        if($answer = mysqli_fetch_array($resultAnswer)){
+                            $answerStr = $answerVariants[1];
+                            break;
+                        }
+                    }
+                }
+                else if($questions[0] == 'checkbox'){
+                    $query = "(SELECT id, text FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
+                    $resultAnswerVariants = mysqli_query($connection, $query);
+                    while($answerVariants = mysqli_fetch_array($resultAnswerVariants)){
+                        $query = "(SELECT id FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
+                        $resultAnswer = mysqli_query($connection, $query);
+                        if($answer = mysqli_fetch_array($resultAnswer)){
+                            if($answerStr != "")
+                                $answerStr .= ", " . $answerVariants[1];
+                            else
+                                $answerStr = $answerVariants[1];
+                        }
+                    }
+                }
+                $sheet->setCellValueByColumnAndRow($temp, $i, $answerStr);
+                $temp++;
+                $questionId++;
+            }
+        }
         $i++;
     }
 }
