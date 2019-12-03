@@ -41,7 +41,7 @@ body{
     margin-bottom: 25px;
 }
 
-p{
+.main p{
     width: 75%;
     margin-bottom: 150px;
     line-height: normal;
@@ -160,13 +160,14 @@ p{
     color: #ccc;
     background: #00adb5;
     border: 1px solid #ccc;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     -webkit-transition: background, color 500ms;
     -moz-transition: background, color 500ms;
     -ms-transition: background, color 500ms;
     -o-transition: background, color 500ms;
     transition: background, color 500ms;
 }
+
 .login-container form input[type="submit"]:hover{
     color: #00adb5;
     background: #ccc;

@@ -23,6 +23,7 @@ require_once "../php/connection.php";
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/media.css">
 </head>
 <body>
 <header class="tests-header">

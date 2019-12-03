@@ -22,6 +22,7 @@ $loginId = mysqli_fetch_array($resultLoginId);
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/media.css">
 </head>
 <body>
 <header class="tests-header">
@@ -57,7 +58,7 @@ $loginId = mysqli_fetch_array($resultLoginId);
                 ?>
             </div>
             <input type="hidden" name="removeGroups" value="<? echo $i; ?>">
-            <input type="submit" value="Удалить">
+            <input type="submit" value="Удалить группы">
         </form>
     </div>
 
