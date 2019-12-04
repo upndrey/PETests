@@ -54,6 +54,10 @@
                 break;
         }
 
+        $query = "(SELECT name FROM tests WHERE id='$testId')";
+        $resultTests = mysqli_query($connection, $query);
+        $tests = mysqli_fetch_array($resultTests);
+
         $query = "(SELECT * FROM results WHERE user_id='$loginId[0]' AND test_id='$testId' AND block_id='$i')";
         $resultBlock = mysqli_query($connection, $query);
         $rowBlock = mysqli_fetch_array($resultBlock);
@@ -63,11 +67,11 @@
             $isTestDone = 0;
         if($isTestDone){
             $_SESSION['test' . $testId] = 1;
-            echo "<a href='test" . $testId . ".php' class='test-link test-done'>Тест " . $testId . "</a>";
+            echo "<a href='test" . $testId . ".php' class='test-link test-done'>" . $tests[0] . "</a>";
         }
         else{
             $_SESSION['test' . $testId] = NULL;
-            echo "<a href='test" . $testId . ".php' class='test-link'>Тест " . $testId . "</a>";
+            echo "<a href='test" . $testId . ".php' class='test-link'>" . $tests[0] . "</a>";
         }
         $blockId = 1;
         echo "<div class='test-block'>";
@@ -96,11 +100,14 @@
             $query = "(SELECT * FROM results WHERE user_id='$loginId[0]' AND test_id='$testId' AND block_id='$blockId')";
             $resultBlock = mysqli_query($connection, $query);
             $rowBlock = mysqli_fetch_array($resultBlock);
-
             if($rowBlock)
                 $isDone = 1;
-            if($isDone)
-                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . "</div>";
+            if($isDone && $rowBlock[3])
+                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[3]</div>";
+            else if($isDone && $testId == 3 && $rowBlock[3] != NULL)
+                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": +</div>";
+            else if($isDone && !$rowBlock[3] && $rowBlock[3] == NULL)
+                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": -</div>";
             else if($isClosed)
                 echo "<div class='block-elem closed-block-elem'>Блок " . $blockId . "</div>";
             else
