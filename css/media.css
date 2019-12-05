@@ -118,6 +118,11 @@
         width: 100%;
     }
 
+    .groupsController{
+        flex-direction: column;
+        height: auto;
+    }
+
     /* tests */
     .tests .test-help{
         line-height: 20px;
@@ -131,6 +136,15 @@
         width: 760px;
     }
 
+    .groupsController{
+        flex-direction: row;
+        height: inherit;
+    }
+
+    .saveTimeBlock div{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /* lg-устройства (больше или равно 992px) */
@@ -139,6 +153,12 @@
     .container{
         width: 960px;
     }
+
+    .saveTimeBlock div{
+        display: block;
+        flex-direction: row;
+    }
+
 }
 
 /* xl-устройства (больше или равно 1200px) */

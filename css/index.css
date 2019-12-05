@@ -393,6 +393,23 @@ body{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    box-sizing: border-box;
+    height: 275px;
+}
+
+.saveTimeBlock{
+    border: 1px solid white;
+    padding: 15px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: scroll;
+    height: 275px;
+}
+
+.saveTimeBlock input[type=text]{
+    width: 100px;
 }
 
 .admin-panel input[type=submit]{

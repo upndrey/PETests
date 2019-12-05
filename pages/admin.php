@@ -37,9 +37,11 @@ $loginId = mysqli_fetch_array($resultLoginId);
 <div class="container tests admin-panel">
     <h2>Админ панель:</h2>
     <div class="groupsController">
-        <form action="../php/admin.php" class="addGroupBlock" method="post">
-            <label for="groupName">Добавить группу:</label>
-            <input type="text" required name="groupName" id="groupName" placeholder="Введите название группы"/>
+        <form action="../php/admin.php" method="post">
+            <div class="addGroupBlock">
+                <label for="groupName">Добавить группу:</label>
+                <input type="text" required name="groupName" id="groupName" placeholder="Введите название группы"/>
+            </div>
             <input type="submit" name="sendGroup" value="Добавить">
         </form>
         <form action="../php/admin.php" class="delGroup" method="post">
@@ -59,6 +61,27 @@ $loginId = mysqli_fetch_array($resultLoginId);
             </div>
             <input type="hidden" name="removeGroups" value="<? echo $i; ?>">
             <input type="submit" value="Удалить группы">
+        </form>
+
+        <form action="../php/admin.php" method="post">
+            <div class="saveTimeBlock">
+                <?
+                $resultTime = mysqli_query($connection, "(SELECT dateStart, dateEnd FROM blocks)");
+                $i = 0;
+                $blockId = 1;
+                while ($time = mysqli_fetch_array($resultTime)) {
+                    echo "
+                        <div>
+                            <p>Блок " . $blockId++ . "</p>
+                            <input type='text' name='time" . $i++ . "' value = '" . $time[0] . "'/>
+                            <input type='text' name='time" . $i++ . "' value = '" . $time[1] . "'/>
+                        </div>
+                    ";
+                }
+                ?>
+            </div>
+            <input type="hidden" name="saveTimeResult" value="1">
+            <input type="submit" name="sendTimeResult" value="Сохранить">
         </form>
     </div>
 
