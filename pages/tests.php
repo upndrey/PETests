@@ -41,7 +41,7 @@
     $testId = 1;
     while ($testId != 4) {
         $i = 1;
-        for(; $i <= 4; $i++){
+        for(; $i <= 8; $i++){
             $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$i')";
             $resultDate = mysqli_query($connection, $query);
             $rowDate = mysqli_fetch_array($resultDate);
@@ -75,7 +75,7 @@
         }
         $blockId = 1;
         echo "<div class='test-block'>";
-        while ($blockId != 5) {
+        while ($blockId != 9) {
             $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
             $resultBlock = mysqli_query($connection, $query);
             $rowBlock = mysqli_fetch_array($resultBlock);

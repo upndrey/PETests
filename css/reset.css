@@ -90,7 +90,7 @@ button::-moz-focus-inner {
 
 input[type="text"],
 input[type="password"]{
-    border: 1px solid #cccccc; //цвет рамки
+    border: 1px solid #eee; //цвет рамки
 border-radius: 3px; //закругление углов (общее)
 -webkit-border-radius: 3px; //закругление углов (Google Chrome)
 -moz-border-radius: 3px; //закругление углов (FireFox)
@@ -99,7 +99,7 @@ background: #ffffff !important; // желательно прописывать, 
 outline: none; // удаляет обводку в браузерах хром(желтая) и сафари(синяя)
 height: 24px; // высота на свое усмотрение
 width: 120px; // ширина на свое усмотрение
-color: #cccccc; //цвет шрифта в обычном состоянии
+color: #eee; //цвет шрифта в обычном состоянии
 font-size: 11px; // Размер шрифта
 font-family: Tahoma; // Стиль шрифта
 }

@@ -22,7 +22,7 @@ body{
     width: 100%;
     height: 100vh;
     background: url("../images/header.jpg");
-    color: #ccc;
+    color: #eee;
 }
 
 .main .wrapper{
@@ -83,7 +83,7 @@ body{
 
 .login-block .signup-btn{
     color: #393e46;
-    background: #ccc;
+    background: #eee;
     border: 1px solid #393e46;
     -webkit-box-shadow: 0 0 15px 5px rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    0 0 15px 5px rgba(50, 50, 50, 0.75);
@@ -91,9 +91,9 @@ body{
 }
 
 .login-block .signup-btn:hover{
-    color: #ccc;
+    color: #eee;
     background: transparent;
-    border: 1px solid #ccc;
+    border: 1px solid #eee;
     -webkit-box-shadow: 0 0 0 0 rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    0 0 0 0 rgba(50, 50, 50, 0.75);
     box-shadow:         0 0 0 0 rgba(50, 50, 50, 0.75);
@@ -127,7 +127,7 @@ body{
 .login, .signup{
     position: absolute;
     margin: 50px auto;
-    background: #ccc;
+    background: #eee;
     height: max-content;
 }
 
@@ -157,9 +157,9 @@ body{
 .login-container form input[type="submit"]{
     padding: 10px;
     cursor: pointer;
-    color: #ccc;
+    color: #eee;
     background: #00adb5;
-    border: 1px solid #ccc;
+    border: 1px solid #eee;
     margin-bottom: 30px;
     -webkit-transition: background, color 500ms;
     -moz-transition: background, color 500ms;
@@ -170,7 +170,7 @@ body{
 
 .login-container form input[type="submit"]:hover{
     color: #00adb5;
-    background: #ccc;
+    background: #eee;
     border: 1px solid #00adb5;
 }
 
@@ -179,7 +179,7 @@ body{
     width: 99%;
     height: 60px;
     margin: auto;
-    background: #ccc;
+    background: #eee;
 }
 
 .tests-header .container{
@@ -211,7 +211,7 @@ body{
 }
 
 .tests{
-    background: #ccc;
+    background: #eee;
     margin-top: 30px;
     box-sizing: border-box;
     padding: 30px;
@@ -231,7 +231,7 @@ body{
     display: block;
     width: calc(100% - 60px);
     font-size: 24px;
-    color: #043965;
+    color: #25ae88;
     -webkit-transition: ease-in-out .5s;
     -moz-transition: ease-in-out .5s;
     -ms-transition: ease-in-out .5s;
@@ -246,13 +246,13 @@ body{
 }
 
 .tests .test-link:hover{
-    background: #043965;
+    background: #25ae88;
     color: #fff;
     cursor: pointer;
 }
 
 .tests .test-help{
-    background: #ccc;
+    background: #eee;
     padding: 30px;
     width: calc(100% - 60px);
     font-size: 16px;
@@ -283,31 +283,14 @@ body{
     transition: ease-in-out .5s;
 }
 
-.test-block .block-elem:hover{
-    border-top: 1px solid #043965;
-    background: #fff;
-}
-
 .test-block .done-block-elem{
-    color: #ffffff;
-    background: #25ae88;
-}
-
-.test-block .done-block-elem:hover{
-    cursor: default;
     color: #ffffff;
     background: #25ae88;
 }
 
 .test-block .closed-block-elem{
     color: #ffffff;
-    background: #990000;
-}
-
-.test-block .closed-block-elem:hover{
-    cursor: default;
-    color: #ffffff;
-    background: #990000;
+    background: #555;
 }
 
 /* Test page */
@@ -406,6 +389,9 @@ body{
     align-items: flex-start;
     overflow-y: scroll;
     height: 275px;
+}
+.saveTimeBlock div p{
+    margin-top: 20px;
 }
 
 .saveTimeBlock input[type=text]{
