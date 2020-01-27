@@ -62,7 +62,7 @@
 
     $date = getdate();
     $block_id = 1;
-    for(; $block_id <= 4; $block_id++){
+    for(; $block_id <= 8; $block_id++){
         $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$block_id')";
         $resultDate = mysqli_query($connection, $query);
         $rowDate = mysqli_fetch_array($resultDate);

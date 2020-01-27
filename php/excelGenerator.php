@@ -515,7 +515,7 @@ while($group = mysqli_fetch_array($resultGroups)){
         $userName = $usersInfo[1] . " " . $usersInfo[0];
         $sheet->setCellValueByColumnAndRow(1, $i, $userName);
         $temp = 2;
-        for($j = 1; $j <= 4; $j++){
+        for($j = 1; $j <= 8; $j++){
 
             $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
             $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 9, 1);

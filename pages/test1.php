@@ -46,6 +46,7 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
     while ($rowQuestion = mysqli_fetch_array($resultQuestions)) {
         echo "<div class='question'>" . $rowQuestion[0] . "</div>";
         $answerId = 1;
+        echo "<div class='answers'>";
         while ($rowAnswer = mysqli_fetch_array($resultAnswers)) {
             echo "  <div>
                         <input type='radio' required value='" . $questionId . "_" . $answerId . "' id='answer" . $questionId . $answerId . "'  name='answer" . $questionId . "'>
@@ -54,12 +55,34 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
             $answerId++;
             if($answerId == 5) break;
         }
+        echo "</div>";
         $questionId++;
     }
     ?>
     <input type="hidden" name="test" value="1">
-    <input type="submit" value="Отправить" class="send-result">
+    <input type="submit" value="Отправить" class="send-result" onclick="return isCheckbox();">
     </form>
 </div>
+
+<script>
+    function isCheckbox() {
+        let divs = document.querySelectorAll("form div.answers");
+        for(let i = 0; i < divs.length; i++){
+            let inputs = divs[i].querySelectorAll("input");
+            let isAnySelected = 0;
+            for(let j = 0; j < inputs.length; j++){
+                if(inputs[j].checked){
+                    isAnySelected = 1;
+                    break;
+                }
+            }
+            if(!isAnySelected) {
+                alert("Не выбран обязательный пункт №" + (i + 1));
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
 </body>
 </html>
