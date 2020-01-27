@@ -54,6 +54,55 @@
         top: 10px;
         left: 5%;
     }
+}
+
+/* sm-устройства (больше или равно 576px) */
+@media (min-width: 576px) {
+    /* CSS для: 576px <= ширины <= 767px */
+    .container{
+        width: 560px;
+    }
+
+    .main h1{
+        text-align: center;
+    }
+
+    .main p{
+        width: 100%;
+    }
+
+    .groupsController{
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* tests */
+    .tests .test-help{
+        line-height: 20px;
+    }
+}
+
+/* md-устройства (больше или равно 768px) */
+@media (min-width: 768px) {
+    /* CSS для: 768px <= ширины <= 991px */
+    .container{
+        width: 760px;
+    }
+
+    .groupsController{
+        flex-direction: row;
+        height: inherit;
+    }
+
+    .saveTimeBlock div{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* до 992px */
+@media (max-width: 992px) {
+
 
     /* tests */
     .tests .test-help{
@@ -103,50 +152,6 @@
     }
 }
 
-/* sm-устройства (больше или равно 576px) */
-@media (min-width: 576px) {
-    /* CSS для: 576px <= ширины <= 767px */
-    .container{
-        width: 560px;
-    }
-
-    .main h1{
-        text-align: center;
-    }
-
-    .main p{
-        width: 100%;
-    }
-
-    .groupsController{
-        flex-direction: column;
-        height: auto;
-    }
-
-    /* tests */
-    .tests .test-help{
-        line-height: 20px;
-    }
-}
-
-/* md-устройства (больше или равно 768px) */
-@media (min-width: 768px) {
-    /* CSS для: 768px <= ширины <= 991px */
-    .container{
-        width: 760px;
-    }
-
-    .groupsController{
-        flex-direction: row;
-        height: inherit;
-    }
-
-    .saveTimeBlock div{
-        display: flex;
-        flex-direction: column;
-    }
-}
-
 /* lg-устройства (больше или равно 992px) */
 @media (min-width: 992px) {
     /* CSS для: 992px <= ширины <= 1119px */
@@ -160,6 +165,8 @@
     }
 
 }
+
+
 
 /* xl-устройства (больше или равно 1200px) */
 @media (min-width: 1200px) {
