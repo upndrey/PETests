@@ -6,12 +6,9 @@
 <div class="main">
     <div class="wrapper">
         <div class="container">
-            <h1>Physical Education Tests</h1>
+            <h1>Мониторинг физического воспитания</h1>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Autem beatae blanditiis commodi consequuntur dolore eaque
-                fugiat inventore ipsam iure laudantium molestiae nihil nisi
-                odit perferendis repellat sapiente, soluta temporibus tenetur.
+                Уважаемые студенты! Данный сайт создан для того, чтобы Вы и Ваш преподаватель могли в любую минуту посмотреть динамику развития Ваших физических качеств, функционального состояния и узнать уровень потребности в самостоятельной физкультурной активности. А также здесь будут отображаться результаты ваших знаний в области физического воспитания и ваше отношение к состоянию своего здоровья.
             </p>
             <div class="login-block">
                 <div class="btn login-btn">Вход</div>
