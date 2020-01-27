@@ -45,6 +45,7 @@ require_once "../php/connection.php";
             echo "<div class='question'>" . $rowQuestion[0] . "</div>";
             $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WHERE test_id=3 AND question_id='$questionId')");
             $answerId = 1;
+            echo "<div class='answers'>";
             while ($rowAnswer = mysqli_fetch_array($resultAnswers)) {
                 if($rowQuestion[1] == 'radio')
                     echo "  <div>
@@ -86,12 +87,42 @@ require_once "../php/connection.php";
                 }
                 $answerId++;
             }
+            echo "</div>";
             $questionId++;
         }
         ?>
         <input type="hidden" name="test" value="3">
-        <input type="submit" value="Отправить" class="send-result">
+        <input type="submit" value="Отправить" class="send-result" onclick="return isCheckbox();">
     </form>
 </div>
+
+<script>
+    function isCheckbox() {
+        let textareas = document.querySelectorAll("textarea");
+        for(let i = 0; i < textareas.length; i++){
+            if(textareas[i].value.trim().length === 0){
+                alert("Не заполнен обязательный текстовый блок!");
+                return false;
+            }
+        }
+        let divs = document.querySelectorAll("form div.answers");
+        for(let i = 0; i < divs.length; i++){
+            let inputs = divs[i].querySelectorAll("input");
+            if(!inputs.length) continue;
+            let isAnySelected = 0;
+            for(let j = 0; j < inputs.length; j++){
+                if(inputs[j].checked){
+                    isAnySelected = 1;
+                    break;
+                }
+            }
+            if(!isAnySelected) {
+                alert("Не выбран обязательный пункт!");
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
 </body>
 </html>
