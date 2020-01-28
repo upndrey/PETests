@@ -29,7 +29,7 @@ $sheet = $xls->getActiveSheet();
 // Подписываем лист
 $sheet->setTitle('Оценка знаний ФК');
 
-for($col = 'A'; $col <= 'J'; $col++) {
+for($col = 'A'; $col <= 'R'; $col++) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
 }
 // Вставляем текст в ячейку A1
@@ -72,7 +72,7 @@ $sheet->getStyle('E1')->getAlignment()->setHorizontal(
 $sheet->setCellValue("E2", 'Баллы');
 $sheet->setCellValue("F2", 'Дата');
 
-$sheet->setCellValue("G1", 'R3');
+$sheet->setCellValue("G1", 'R2');
 $sheet->getStyle('G1')->getFill()->setFillType(
     PHPExcel_Style_Fill::FILL_SOLID);
 $sheet->getStyle('G1')->getFill()->getStartColor()->setRGB('EEEEEE');
@@ -93,6 +93,53 @@ $sheet->getStyle('I1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $sheet->setCellValue("I2", 'Баллы');
 $sheet->setCellValue("J2", 'Дата');
+
+// Второй семестр
+// Вставляем текст в ячейку C1
+$sheet->setCellValue("K1", 'R ввод');
+$sheet->getStyle('K1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('K1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('K1:L1');
+// Выравнивание текста
+$sheet->getStyle('K1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+// Вставляем текст в ячейку C2
+$sheet->setCellValue("K2", 'Баллы');
+$sheet->setCellValue("L2", 'Дата');
+
+$sheet->setCellValue("M1", 'R1');
+$sheet->getStyle('M1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('M1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('M1:N1');
+// Выравнивание текста
+$sheet->getStyle('M1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("M2", 'Баллы');
+$sheet->setCellValue("N2", 'Дата');
+
+$sheet->setCellValue("O1", 'R2');
+$sheet->getStyle('O1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('O1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('O1:P1');
+// Выравнивание текста
+$sheet->getStyle('O1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("O2", 'Баллы');
+$sheet->setCellValue("P2", 'Дата');
+
+$sheet->setCellValue("Q1", 'R итог');
+$sheet->getStyle('Q1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('Q1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('Q1:R1');
+// Выравнивание текста
+$sheet->getStyle('Q1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("Q2", 'Баллы');
+$sheet->setCellValue("R2", 'Дата');
 
 $query = "(SELECT name FROM groups)";
 $resultGroups = mysqli_query($connection, $query);
@@ -117,7 +164,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 
         // Выводим Баллы 2 3 4  5 6 7  8 9 10
         $temp = 2;
-        for($j = 1; $j <= 4; $j++){
+        for($j = 1; $j <= 8; $j++){
             $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='1' AND block_id='$j')";
 
             $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
@@ -150,7 +197,7 @@ $sheet = $xls->getActiveSheet();
 // Подписываем лист
 $sheet->setTitle('Уровень потребности');
 
-for($col = 'A'; $col <= 'N'; $col++) {
+for($col = 'A'; $col <= 'Z'; $col++) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
 }
 // Вставляем текст в ячейку A1
@@ -195,7 +242,7 @@ $sheet->setCellValue("F2", 'Баллы');
 $sheet->setCellValue("G2", 'Уровень');
 $sheet->setCellValue("H2", 'Дата');
 
-$sheet->setCellValue("I1", 'R3');
+$sheet->setCellValue("I1", 'R2');
 $sheet->getStyle('I1')->getFill()->setFillType(
     PHPExcel_Style_Fill::FILL_SOLID);
 $sheet->getStyle('I1')->getFill()->getStartColor()->setRGB('EEEEEE');
@@ -218,6 +265,59 @@ $sheet->getStyle('L1')->getAlignment()->setHorizontal(
 $sheet->setCellValue("L2", 'Баллы');
 $sheet->setCellValue("M2", 'Уровень');
 $sheet->setCellValue("N2", 'Дата');
+
+// Второй семестр
+
+// Вставляем текст в ячейку C1
+$sheet->setCellValue("O1", 'R ввод');
+$sheet->getStyle('O1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('O1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('O1:Q1');
+// Выравнивание текста
+$sheet->getStyle('O1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+// Вставляем текст в ячейку C2
+$sheet->setCellValue("O2", 'Баллы');
+$sheet->setCellValue("P2", 'Уровень');
+$sheet->setCellValue("Q2", 'Дата');
+
+$sheet->setCellValue("R1", 'R1');
+$sheet->getStyle('R1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('R1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('R1:T1');
+// Выравнивание текста
+$sheet->getStyle('R1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("R2", 'Баллы');
+$sheet->setCellValue("S2", 'Уровень');
+$sheet->setCellValue("T2", 'Дата');
+
+$sheet->setCellValue("U1", 'R2');
+$sheet->getStyle('U1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('U1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('U1:W1');
+// Выравнивание текста
+$sheet->getStyle('U1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("U2", 'Баллы');
+$sheet->setCellValue("V2", 'Уровень');
+$sheet->setCellValue("W2", 'Дата');
+
+$sheet->setCellValue("X1", 'R итог');
+$sheet->getStyle('X1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('X1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('X1:Z1');
+// Выравнивание текста
+$sheet->getStyle('X1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("X2", 'Баллы');
+$sheet->setCellValue("Y2", 'Уровень');
+$sheet->setCellValue("Z2", 'Дата');
+
 
 $query = "(SELECT name FROM groups)";
 $resultGroups = mysqli_query($connection, $query);
@@ -242,7 +342,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 
         // Выводим Баллы 2 3 4  5 6 7  8 9 10
         $temp = 2;
-        for($j = 1; $j <= 4; $j++){
+        for($j = 1; $j <= 8; $j++){
             $query = "(SELECT points, level, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='2' AND block_id='$j')";
 
             $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
@@ -280,7 +380,7 @@ $sheet = $xls->getActiveSheet();
 // Подписываем лист
 $sheet->setTitle('Отношение к состоянию здоровья');
 
-for($col = 'A'; $col <= 'J'; $col++) {
+for($col = 'A'; $col <= 'R'; $col++) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
 }
 // Вставляем текст в ячейку A1
@@ -309,7 +409,7 @@ $sheet->mergeCells('C1:D1');
 $sheet->getStyle('C1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 // Вставляем текст в ячейку C2
-$sheet->setCellValue("C2", 'Баллы');
+$sheet->setCellValue("C2", 'Пройден');
 $sheet->setCellValue("D2", 'Дата');
 
 $sheet->setCellValue("E1", 'R1');
@@ -323,7 +423,7 @@ $sheet->getStyle('E1')->getAlignment()->setHorizontal(
 $sheet->setCellValue("E2", 'Пройден');
 $sheet->setCellValue("F2", 'Дата');
 
-$sheet->setCellValue("G1", 'R3');
+$sheet->setCellValue("G1", 'R2');
 $sheet->getStyle('G1')->getFill()->setFillType(
     PHPExcel_Style_Fill::FILL_SOLID);
 $sheet->getStyle('G1')->getFill()->getStartColor()->setRGB('EEEEEE');
@@ -344,6 +444,54 @@ $sheet->getStyle('I1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $sheet->setCellValue("I2", 'Пройден');
 $sheet->setCellValue("J2", 'Дата');
+
+// Второй семестр
+// Вставляем текст в ячейку C1
+$sheet->setCellValue("K1", 'R ввод');
+$sheet->getStyle('K1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('K1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('K1:L1');
+// Выравнивание текста
+$sheet->getStyle('K1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+// Вставляем текст в ячейку C2
+$sheet->setCellValue("K2", 'Пройден');
+$sheet->setCellValue("L2", 'Дата');
+
+$sheet->setCellValue("M1", 'R1');
+$sheet->getStyle('M1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('M1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('M1:N1');
+// Выравнивание текста
+$sheet->getStyle('M1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("M2", 'Пройден');
+$sheet->setCellValue("N2", 'Дата');
+
+$sheet->setCellValue("O1", 'R2');
+$sheet->getStyle('O1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('O1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('O1:P1');
+// Выравнивание текста
+$sheet->getStyle('O1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("O2", 'Пройден');
+$sheet->setCellValue("P2", 'Дата');
+
+$sheet->setCellValue("Q1", 'R итог');
+$sheet->getStyle('Q1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('Q1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->mergeCells('Q1:R1');
+// Выравнивание текста
+$sheet->getStyle('Q1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->setCellValue("Q2", 'Пройден');
+$sheet->setCellValue("R2", 'Дата');
+
 
 $query = "(SELECT name FROM groups)";
 $resultGroups = mysqli_query($connection, $query);
@@ -368,7 +516,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 
         // Выводим Баллы 2 3 4  5 6 7  8 9 10
         $temp = 2;
-        for($j = 1; $j <= 4; $j++){
+        for($j = 1; $j <= 8; $j++){
             $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='3' AND block_id='$j')";
 
             $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
@@ -443,7 +591,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 
         // Выводим Баллы 2 3 4  5 6 7  8 9 10
         $temp = 2;
-        for($j = 1; $j <= 4; $j++){
+        for($j = 1; $j <= 8; $j++){
             $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='3' AND block_id='$j')";
 
             $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
