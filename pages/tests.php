@@ -124,5 +124,9 @@
     </div>
 </div>
 
+<div class="container practice">
+    <a href="./funcTest.php" class="funcTests">Пройти функциональные пробы</a>
+</div>
+
 </body>
 </html>
