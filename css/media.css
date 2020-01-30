@@ -100,10 +100,6 @@
     .tests .test-help{
         line-height: 20px;
     }
-
-    .test-block{
-        overflow-x: scroll;
-    }
 }
 
 /* md-устройства (больше или равно 768px) */

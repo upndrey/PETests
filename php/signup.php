@@ -19,7 +19,10 @@ if(!$result){
     $lastName = $_POST['lastName'];
     $lastName = mysqli_real_escape_string($connection, $lastName);
 
-    $query = "INSERT INTO users (login, password, group_name, firstName, lastName) VALUES ('$login', '$hash', '$group', '$firstName', '$lastName')";
+    $sex = $_POST['sex'];
+    $sex = mysqli_real_escape_string($connection, $sex);
+
+    $query = "INSERT INTO users (login, password, group_name, firstName, lastName, sex) VALUES ('$login', '$hash', '$group', '$firstName', '$lastName', '$sex')";
     mysqli_query($connection, $query);
     session_start();
     $_SESSION['login'] = $login;

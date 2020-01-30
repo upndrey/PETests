@@ -24,6 +24,11 @@
                 }
             ?>
         </select>
+        <label for="sex">Группа:</label>
+        <select required name="sex" id="sex">
+            <option>мужской</option>
+            <option>женский</option>
+        </select>
         <input type="submit" value="Зарегистрироваться">
     </form>
 </div>

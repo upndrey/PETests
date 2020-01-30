@@ -442,6 +442,10 @@ body{
     vertical-align:middle;
 }
 
+.health-link{
+    margin-top: 10px;
+}
+
 .funcTestForm{
     display: flex;
     flex-direction: column;
