@@ -3,6 +3,10 @@ session_start();
 if(!$_SESSION['login']){
     header('Location: ../');
 }
+if($_SESSION['funcTest'] == "1"){
+    header('Location: tests.php');
+}
+
 require_once "../php/connection.php";
 $resultQuestions = mysqli_query($connection, "(SELECT text FROM questions WHERE test_id=1)");
 $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WHERE test_id=1)");
@@ -29,7 +33,7 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
         <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
         <div class="tests-header-links">
             <a href="" class="username"><? echo $_SESSION['login']; ?></a>
-            <a href="../" class="logout">Выход</a>
+            <a href="./tests.php" class="logout">Назад</a>
         </div>
     </div>
 </header>
@@ -37,27 +41,27 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
     <form action="../php/sendFuncTest.php" method="post" class="funcTestForm">
         <div>
             <label for="chin-up">Подтягивания</label>
-            <input id="chin-up" name="chin-up" type="number" value="0" required />
+            <input id="chin-up" name="chin-up" type="number" placeholder="0" required />
         </div>
         <div>
             <label for="long-jump">Прыжок в длину</label>
-            <input id="long-jump" name="long-jump" type="number" value="0" required /><span> (см)</span>
+            <input id="long-jump" name="long-jump" type="number" placeholder="0" required /><span> (см)</span>
         </div>
         <div>
             <label for="flexibility">Гибкость</label>
-            <input id="flexibility" name="flexibility" type="number" value="0" required /><span> (см)</span>
+            <input id="flexibility" name="flexibility" type="number" placeholder="0" required /><span> (см)</span>
         </div>
         <div>
             <label for="abs">Пресс</label>
-            <input id="abs" name="abs" type="number" value="0" required />
+            <input id="abs" name="abs" type="number" placeholder="0" required />
         </div>
         <div>
             <label for="skipping-rope">Скакалка 1 мин.</label>
-            <input id="skipping-rope" name="skipping-rope" type="number" value="0" required />
+            <input id="skipping-rope" name="skipping-rope" type="number" placeholder="0" required />
         </div>
         <div>
             <label for="running">Бег 12 мин.</label>
-            <input id="running" name="running" type="number" value="0" required />
+            <input id="running" name="running" type="number" placeholder="0" required />
         </div>
         <input type="submit" value="Отправить" class="send-result">
     </form>

@@ -124,8 +124,107 @@
     </div>
 </div>
 
-<div class="container practice">
-    <a href="./funcTest.php" class="funcTests">Пройти функциональные пробы</a>
+<div class="container tests practice">
+
+    <?
+    $currBlock = 1;
+    for(; $currBlock <= 8; $currBlock++){
+        $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$currBlock')";
+        $resultDate = mysqli_query($connection, $query);
+        $rowDate = mysqli_fetch_array($resultDate);
+
+        $currDate = date_create()->format('U');
+        $dateStart = date_create_from_format ("d.m.Y", $rowDate[0])->format('U');
+        $dateEnd = date_create_from_format ("d.m.Y", $rowDate[1])->format('U');
+
+        if($currDate >= $dateStart && $currDate <= $dateEnd)
+            break;
+    }
+
+    $query = "(SELECT * FROM func_test WHERE user_id='$loginId[0]' AND block_id='$currBlock')";
+    $resultBlock = mysqli_query($connection, $query);
+    $rowBlock = mysqli_fetch_array($resultBlock);
+    if($rowBlock)
+        $isTestDone = 1;
+    else
+        $isTestDone = 0;
+
+    if($isTestDone){
+        $_SESSION['funcTest'] = 1;
+        echo "<a href='./funcTest.php' class='test-link test-done'>Пройти функциональные пробы</a>";
+    }
+    else{
+        $_SESSION['funcTest'] = NULL;
+        echo "<a href='./funcTest.php' class='test-link'>Пройти функциональные пробы</a>";
+    }
+
+
+    $blockId = 1;
+    echo "<div class='test-block'>";
+    echo "<table class='funcTest-table'>";
+    echo "  <th></th>
+            <th>Подтягивания</th>
+            <th>Прыжок в длину</th>
+            <th>Гибкость</th>
+            <th>Пресс</th>
+            <th>Скакалка 1&nbsp;мин.</th>
+            <th>Бег 12&nbsp;мин.</th>";
+    while ($blockId != 9) {
+        $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
+        $resultBlock = mysqli_query($connection, $query);
+        $rowBlock = mysqli_fetch_array($resultBlock);
+        //Отмечаем пройденные тесты
+        $currDate = date_create()->format('U');
+
+
+        //Отмечаем, что блок ещё не готов к прохождению
+        $dateStart = date_create_from_format ("d.m.Y", $rowBlock[0])->format('U');
+        $dateEnd = date_create_from_format ("d.m.Y", $rowBlock[1])->format('U');
+        if($currDate < $dateStart)
+            $isClosed = 1;
+        else
+            $isClosed = 0;
+        //Отмечаем нынешний тест, если он пройден
+        $query = "(SELECT * FROM func_test WHERE user_id='$loginId[0]' AND block_id='$blockId')";
+        $resultBlock = mysqli_query($connection, $query);
+        $funcTestBlock = mysqli_fetch_array($resultBlock);
+        if($funcTestBlock){
+            echo "<tr class='done-block-elem'>";
+            echo "<td>Блок&nbsp;" . $blockId . "</td>";
+            for($i = 0; $i < 6; $i++){
+                echo "<td>" . $funcTestBlock[$i + 3] . "</td>";
+            }
+            echo "</tr>";
+        }
+        elseif($isClosed){
+            echo "<tr class='closed-block-elem'>";
+            echo "<td>Блок&nbsp;" . $blockId . "</td>";
+            for($i = 0; $i < 6; $i++){
+                echo "<td></td>";
+            }
+            echo "</tr>";
+        }
+        elseif(!$isTestDone && $currBlock == $blockId){
+            echo "<tr class='done-block-elem'>";
+            echo "<td>Блок&nbsp;" . $blockId . "</td>";
+            for($i = 0; $i < 6; $i++){
+                echo "<td></td>";
+            }
+            echo "</tr>";
+        }
+        else{
+            echo "<tr class='done-block-elem'>";
+            echo "<td>Блок&nbsp;" . $blockId . "</td>";
+            for($i = 0; $i < 6; $i++){
+                echo "<td>-</td>";
+            }
+            echo "</tr>";
+        }
+        $blockId++;
+    }
+    echo "</table>";
+    echo "</div>";
+    ?>
 </div>
 
 </body>

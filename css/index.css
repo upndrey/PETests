@@ -430,3 +430,55 @@ body{
 }
 
 /* func test */
+.funcTest-table{
+    margin: auto;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.funcTest-table td, .funcTest-table th{
+    padding: 10px;
+    border: 1px solid #000;
+    vertical-align:middle;
+}
+
+.funcTestForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.funcTestForm>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.funcTestForm>div>label{
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.funcTestForm>div>input{
+    font-size: 28px;
+}
+
+.funcTestForm .send-result{
+    color: white;
+    background: #25ae88;
+    border: 1px solid #25ae88;
+    display: block;
+    margin: auto;
+    text-align: center;
+    padding: 15px 50px;
+    margin-top: 30px;
+    box-sizing: padding-box;
+}
+
+.funcTestForm .send-result:hover{
+    cursor: pointer;
+    border: 1px solid #25ae88;
+    background: white;
+    color: #25ae88;
+}

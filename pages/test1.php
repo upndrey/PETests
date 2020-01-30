@@ -34,7 +34,7 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
         <h1>ТЕСТЫ ПО ФИЗКУЛЬТУРЕ</h1>
         <div class="tests-header-links">
             <a href="" class="username"><? echo $_SESSION['login']; ?></a>
-            <a href="../" class="logout">Выход</a>
+            <a href="./tests.php" class="logout">Назад</a>
         </div>
     </div>
 </header>
