@@ -36,8 +36,11 @@ $flexibility = $_POST['flexibility'];
 $abs = $_POST['abs'];
 $skipping_rope = $_POST['skipping-rope'];
 $running = $_POST['running'];
+
+$date = getdate();
+$dateResult = $date['mday'] . "." . $date['mon'] . "." . $date['year'];
 //Записываем нормативы в результат
-$query = "INSERT INTO func_test (user_id, block_id, chin_up, long_jump, flexibility, abs, skipping_rope, running) VALUES ('$loginId[0]', '$block_id', '$chin_up', '$long_jump', '$flexibility', '$abs', '$skipping_rope', '$running')";
+$query = "INSERT INTO func_test (user_id, block_id, chin_up, long_jump, flexibility, abs, skipping_rope, running, date) VALUES ('$loginId[0]', '$block_id', '$chin_up', '$long_jump', '$flexibility', '$abs', '$skipping_rope', '$running', '$dateResult')";
 mysqli_query($connection, $query);
 
 header('Location: ' . $_SERVER['HTTP_SERVER'] . '/pages/tests.php');

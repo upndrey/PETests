@@ -757,24 +757,26 @@ $sheet->getStyle('B1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 for($i = 0; $i < 8; $i++){//Блоки
-    $sheet->mergeCellsByColumnAndRow(2 + $i * 6, 1, 2 + $i * 6 + 5, 1);
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6, 1, 'Блок ' . ($i + 1));
-    $sheet->getColumnDimensionByColumn(2 + $i * 6)->setAutoSize(true);
+    $sheet->mergeCellsByColumnAndRow(2 + $i * 7, 1, 2 + $i * 7 + 65, 1);
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7, 1, 'Блок ' . ($i + 1));
+    $sheet->getColumnDimensionByColumn(2 + $i * 7)->setAutoSize(true);
 
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6, 2, 'Подтягивания');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6 + 1, 2, 'прыжок в длину');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6 + 2, 2, 'гибкость');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6 + 3, 2, 'пресс');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6 + 4, 2, 'скакалка 1 мин.');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 6 + 5, 2, '12 мин. бег');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7, 2, 'подтягивания');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7 + 1, 2, 'прыжок в длину');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7 + 2, 2, 'гибкость');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7 + 3, 2, 'пресс');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7 + 4, 2, 'скакалка 1 мин.');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7 + 5, 2, '12 мин. бег');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 7 + 6, 2, 'дата');
 
 
-    $sheet->getColumnDimensionByColumn(2 + $i * 6)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 6 + 1)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 6 + 2)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 6 + 3)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 6 + 4)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 6 + 5)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7 + 1)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7 + 2)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7 + 3)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7 + 4)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7 + 5)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 7 + 6)->setAutoSize(true);
 }
 
 $query = "(SELECT name FROM groups)";
@@ -821,8 +823,12 @@ while($group = mysqli_fetch_array($resultGroups)){
                 $temp += 1;
                 $sheet->setCellValueByColumnAndRow($temp, $i, $points[8]);
                 $temp += 1;
+                $sheet->setCellValueByColumnAndRow($temp, $i, $points[9]);
+                $temp += 1;
             }
             else{
+                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+                $temp += 1;
                 $sheet->setCellValueByColumnAndRow($temp, $i, '-');
                 $temp += 1;
                 $sheet->setCellValueByColumnAndRow($temp, $i, '-');
@@ -878,16 +884,18 @@ $sheet->getStyle('B1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 for($i = 0; $i < 8; $i++){//Блоки
-    $sheet->mergeCellsByColumnAndRow(2 + $i * 2, 1, 2 + $i * 2 + 1, 1);
-    $sheet->setCellValueByColumnAndRow(2 + $i * 2, 1, 'Блок ' . ($i + 1));
-    $sheet->getColumnDimensionByColumn(2 + $i * 2)->setAutoSize(true);
+    $sheet->mergeCellsByColumnAndRow(2 + $i * 3, 1, 2 + $i * 3 + 2, 1);
+    $sheet->setCellValueByColumnAndRow(2 + $i * 3, 1, 'Блок ' . ($i + 1));
+    $sheet->getColumnDimensionByColumn(2 + $i * 3)->setAutoSize(true);
 
-    $sheet->setCellValueByColumnAndRow(2 + $i * 2, 2, 'Баллы');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 2 + 1, 2, 'Словесная оценка');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 3, 2, 'Баллы');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 3 + 1, 2, 'Словесная оценка');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 3 + 1, 2, 'Дата');
 
 
-    $sheet->getColumnDimensionByColumn(2 + $i * 2)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 2 + 1)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 3)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 3 + 1)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 3 + 2)->setAutoSize(true);
 }
 
 $query = "(SELECT name FROM groups)";

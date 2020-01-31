@@ -45,7 +45,7 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
         </div>
         <div>
             <label for="height">Рост (м)</label>
-            <input id="height" name="height" type="number" step="0.01" placeholder="1.80" required />
+            <input id="height" name="height" type="number" step="0.01" placeholder="1.8" required />
         </div>
         <div>
             <label for="lung-capacity">Жизненная емкость легких (ЖЕЛ) (в мл):	</label>

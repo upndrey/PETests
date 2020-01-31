@@ -169,8 +169,12 @@ else{
 }
 
 $result = $stat[0] + $stat[1] + $stat[2] + $stat[3] + $stat[4];
+
+
+$date = getdate();
+$dateResult = $date['mday'] . "." . $date['mon'] . "." . $date['year'];
 //Записываем нормативы в результат
-$query = "INSERT INTO health (user_id, block_id, weight, height, lung_capacity, dynamo, heart_rate, arterial_press, recovery, result) VALUES ('$loginId[0]', '$block_id', '$weight', '$height', '$lung_capacity', '$dynamo', '$heart_rate', '$arterial_press', '$recovery', '$result')";
+$query = "INSERT INTO health (user_id, block_id, weight, height, lung_capacity, dynamo, heart_rate, arterial_press, recovery, result, date) VALUES ('$loginId[0]', '$block_id', '$weight', '$height', '$lung_capacity', '$dynamo', '$heart_rate', '$arterial_press', '$recovery', '$result', '$dateResult')";
 mysqli_query($connection, $query);
 
 header('Location: ' . $_SERVER['HTTP_SERVER'] . '/pages/tests.php');
