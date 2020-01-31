@@ -24,7 +24,7 @@
                 }
             ?>
         </select>
-        <label for="sex">Группа:</label>
+        <label for="sex">Пол:</label>
         <select required name="sex" id="sex">
             <option>мужской</option>
             <option>женский</option>

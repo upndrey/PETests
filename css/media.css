@@ -121,9 +121,63 @@
 }
 
 /* до 992px */
+@media (max-width: 668px) {
+    .main{
+        position: absolute;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .login-about{
+        margin-bottom: 25px;
+    }
+
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    ::-webkit-scrollbar:vertical {
+        width: 7px;
+    }
+
+    ::-webkit-scrollbar:horizontal {
+        height: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, .5);
+        border-radius: 10px;
+        border: 2px solid #ffffff;
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: #ffffff;
+    }
+
+    .close-btn{
+        position: fixed;
+        top: 30px;
+    }
+    .test-block{
+        overflow-x: scroll;
+    }
+    .login{
+        height: auto;
+        overflow-y: hidden;
+    }
+    .signup{
+        height: 75vh;
+        overflow-y: scroll;
+    }
+    .login, .signup{
+        position: fixed;
+        margin: 10px auto;
+    }
+}
+
+/* до 992px */
 @media (max-width: 992px) {
-
-
     /* tests */
     .tests .test-help{
         line-height: 20px;
@@ -157,6 +211,7 @@
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 30px;
+        overflow-x: auto;
     }
 
     .test-block .block-elem{
@@ -196,6 +251,12 @@
         border: 1px solid #000;
         padding: 10px 20px;
         margin: 2px;
+    }
+
+    .main{
+        position: fixed;
+        height: 100vh;
+        min-height: auto;
     }
 }
 
