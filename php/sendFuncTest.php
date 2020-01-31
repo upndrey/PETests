@@ -4,6 +4,10 @@ if(!$_SESSION['login']){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
+if(!$_POST['test']){
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+}
+
 require_once "../php/connection.php";
 $login = $_SESSION['login'];
 $query = "(SELECT id FROM users WHERE login='$login')";
@@ -32,7 +36,6 @@ $flexibility = $_POST['flexibility'];
 $abs = $_POST['abs'];
 $skipping_rope = $_POST['skipping-rope'];
 $running = $_POST['running'];
-// INSERT INTO func_test (user_id, block_id, chin_up, long_jump, flexibility, abs, skipping_rope, running) VALUES ('$loginId[0]', '$testId', '$block_id', '$chin_up', '$long_jump', '$flexibility', '$abs', '$skipping_rope')
 //Записываем нормативы в результат
 $query = "INSERT INTO func_test (user_id, block_id, chin_up, long_jump, flexibility, abs, skipping_rope, running) VALUES ('$loginId[0]', '$block_id', '$chin_up', '$long_jump', '$flexibility', '$abs', '$skipping_rope', '$running')";
 mysqli_query($connection, $query);

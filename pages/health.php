@@ -3,7 +3,7 @@ session_start();
 if(!$_SESSION['login']){
     header('Location: ../');
 }
-if($_SESSION['funcTest'] == "1"){
+if($_SESSION['health'] == "1"){
     header('Location: tests.php');
 }
 
@@ -38,35 +38,36 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
     </div>
 </header>
 <div class="container tests">
-    <form action="../php/sendFuncTest.php" method="post" class="funcTestForm">
+    <form action="../php/sendHealth.php" method="post" class="funcTestForm">
         <div>
             <label for="weight">Вес (кг)</label>
-            <input id="weight" name="weight" type="number" placeholder="0" required />
+            <input id="weight" name="weight" type="number" step="0.01" placeholder="60" required />
         </div>
         <div>
             <label for="height">Рост (м)</label>
-            <input id="height" name="height" type="number" placeholder="1.75" required /><span> (см)</span>
+            <input id="height" name="height" type="number" step="0.01" placeholder="1.80" required />
         </div>
         <div>
-            <label for="lung_capacity">Жизненная емкость легких (ЖЕЛ) (в мл):	</label>
-            <input id="lung_capacity" name="lung_capacity" type="number" placeholder="0" required /><span> (см)</span>
+            <label for="lung-capacity">Жизненная емкость легких (ЖЕЛ) (в мл):	</label>
+            <input id="lung-capacity" name="lung-capacity" step="0.01" type="number" placeholder="3000" required />
         </div>
         <div>
             <label for="dynamo">Сила кисти (ДМК) (кг)</label>
-            <input id="dynamo" name="dynamo" type="number" placeholder="0" required />
+            <input id="dynamo" name="dynamo" type="number" step="0.01" placeholder="45" required />
         </div>
         <div>
-            <label for="heart-rate">Частота сердечных сокращений (ЧСС)(пульс за 1 мин)</label>
-            <input id="heart-rate" name="heart-rate" type="number" placeholder="0" required />
+            <label for="heart-rate">Частота сердечных сокращений (ЧСС) (пульс за 1 мин)</label>
+            <input id="heart-rate" name="heart-rate" step="0.01" type="number" placeholder="75" required />
         </div>
         <div>
             <label for="arterial-press">Артериальное давление систолическое (АД)</label>
-            <input id="arterial-press" name="arterial-press" type="number" placeholder="0" required />
+            <input id="arterial-press" name="arterial-press" step="0.01" type="number" placeholder="105" required />
         </div>
         <div>
-            <label for="recovery">Время восстановления пульса(в секундах)</label>
-            <input id="recovery" name="recovery" type="number" placeholder="0" required />
+            <label for="recovery">Время восстановления пульса (в секундах)</label>
+            <input id="recovery" name="recovery" step="0.01" type="number" placeholder="100" required />
         </div>
+        <input type="hidden" name="test" value="health">
         <input type="submit" value="Отправить" class="send-result">
     </form>
 </div>

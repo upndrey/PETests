@@ -205,7 +205,7 @@
             echo "</tr>";
         }
         elseif(!$isTestDone && $currBlock == $blockId){
-            echo "<tr class='done-block-elem'>";
+            echo "<tr>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
                 echo "<td></td>";
@@ -235,12 +235,12 @@
         $isTestDone = 0;
 
     if($isTestDone){
-        $_SESSION['funcTest'] = 1;
-        echo "<a href='./funcTest.php' class='test-link test-done health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
+        $_SESSION['health'] = 1;
+        echo "<a href='./health.php' class='test-link test-done health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
     }
     else{
-        $_SESSION['funcTest'] = NULL;
-        echo "<a href='./funcTest.php' class='test-link health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
+        $_SESSION['health'] = NULL;
+        echo "<a href='./health.php' class='test-link health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
     }
     $blockId = 1;
     echo "<div class='test-block'>";
@@ -271,6 +271,17 @@
         $rowBlock = mysqli_fetch_array($resultBlock);
         if($rowBlock)
             $isDone = 1;
+
+        if($rowBlock[10] >= 16)
+            $rowBlock[10] = "Высокий";
+        elseif($rowBlock[10] >= 12)
+            $rowBlock[10] = "Выше среднего";
+        elseif($rowBlock[10] >= 7)
+            $rowBlock[10] = "Средний";
+        elseif($temp >= 4)
+            $rowBlock[10] = "Ниже среднего";
+        elseif($temp <= 3)
+            $rowBlock[10] = "Низкий";
         if($isDone && $rowBlock[3])
             echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[10]</div>";
         else if($isDone && $testId == 3 && $rowBlock[3] != NULL)

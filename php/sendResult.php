@@ -4,6 +4,10 @@
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
+    if(!$_POST['test']){
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
+
     require_once "../php/connection.php";
     $i = 1;
     $i1 = 0;

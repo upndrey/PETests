@@ -7,6 +7,7 @@ if($_SESSION['funcTest'] == "1"){
     header('Location: tests.php');
 }
 
+
 require_once "../php/connection.php";
 $resultQuestions = mysqli_query($connection, "(SELECT text FROM questions WHERE test_id=1)");
 $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WHERE test_id=1)");
@@ -63,6 +64,7 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
             <label for="running">Бег 12 мин.</label>
             <input id="running" name="running" type="number" placeholder="0" required />
         </div>
+        <input type="hidden" name="test" value="func">
         <input type="submit" value="Отправить" class="send-result">
     </form>
 </div>
