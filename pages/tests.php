@@ -271,17 +271,16 @@
         $rowBlock = mysqli_fetch_array($resultBlock);
         if($rowBlock)
             $isDone = 1;
-
         if($rowBlock[10] >= 16)
             $rowBlock[10] = "Высокий";
         elseif($rowBlock[10] >= 12)
             $rowBlock[10] = "Выше среднего";
         elseif($rowBlock[10] >= 7)
             $rowBlock[10] = "Средний";
-        elseif($temp >= 4)
-            $rowBlock[10] = "Ниже среднего";
-        elseif($temp <= 3)
+        elseif($rowBlock[10] > 3)
             $rowBlock[10] = "Низкий";
+        elseif($rowBlock[10] <= 3)
+            $rowBlock[10] = "Ниже среднего";
         if($isDone && $rowBlock[3])
             echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[10]</div>";
         else if($isDone && $testId == 3 && $rowBlock[3] != NULL)

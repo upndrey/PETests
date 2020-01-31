@@ -21,6 +21,7 @@ $styleArray = array(
     )
 );
 /////////////////////////////// Оценка знаний ФК /////////////////////////////////////////
+$xls->createSheet();
 // Устанавливаем индекс активного листа
 $xls->setActiveSheetIndex(0);
 // Получаем активный лист
@@ -188,8 +189,8 @@ while($group = mysqli_fetch_array($resultGroups)){
     }
 }
 /////////////////////////////// Уровень потребности /////////////////////////////////////////
-// Устанавливаем индекс активного листа
 $xls->createSheet();
+// Устанавливаем индекс активного листа
 $xls->setActiveSheetIndex(1);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
@@ -371,8 +372,8 @@ while($group = mysqli_fetch_array($resultGroups)){
 }
 
 /////////////////////////////// Отношение к состоянию здоровья /////////////////////////////////////////
-// Устанавливаем индекс активного листа
 $xls->createSheet();
+// Устанавливаем индекс активного листа
 $xls->setActiveSheetIndex(2);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
@@ -541,9 +542,9 @@ while($group = mysqli_fetch_array($resultGroups)){
 }
 
 /////////////////////////////// Теория /////////////////////////////////////////
-// Устанавливаем индекс активного листа
 $xls->createSheet();
-$xls->setActiveSheetIndex(2);
+// Устанавливаем индекс активного листа
+$xls->setActiveSheetIndex(3);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -619,7 +620,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 /////////////////////////////// Теория ответы /////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
-$xls->setActiveSheetIndex(3);
+$xls->setActiveSheetIndex(4);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -721,7 +722,8 @@ while($group = mysqli_fetch_array($resultGroups)){
 
 /////////////////////////////// Функциональные пробы /////////////////////////////////////////
 // Устанавливаем индекс активного листа
-$xls->setActiveSheetIndex(4);
+$xls->createSheet();
+$xls->setActiveSheetIndex(5);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -839,6 +841,112 @@ while($group = mysqli_fetch_array($resultGroups)){
     }
 }
 
+/////////////////////////////// Здоровье по Апанасенко /////////////////////////////////////////
+// Устанавливаем индекс активного листа
+$xls->createSheet();
+$xls->setActiveSheetIndex(6);
+// Получаем активный лист
+$sheet = $xls->getActiveSheet();
+// Подписываем лист
+$sheet->setTitle('Здоровье по Апанасенко');
+$sheet->getColumnDimensionByColumn(1)->setAutoSize(true);
+
+
+for($col = 'A'; $col <= 'AX'; $col++) {
+    $sheet->getColumnDimension($col)->setAutoSize(true);
+    $sheet->getStyle($col . '1')->getFill()->setFillType(
+        PHPExcel_Style_Fill::FILL_SOLID);
+    $sheet->getStyle($col . '1')->getFill()->getStartColor()->setRGB('EEEEEE');
+    $sheet->getStyle($col . '1')->getAlignment()->setHorizontal(
+        PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+}
+
+// Вставляем текст в ячейку A1
+$sheet->setCellValue("A1", 'Группа');
+$sheet->getStyle('A1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('A1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+// Вставляем текст в ячейку B1
+$sheet->setCellValue("B1", 'Ф.И.О.');
+$sheet->getStyle('B1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('B1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+for($i = 0; $i < 8; $i++){//Блоки
+    $sheet->mergeCellsByColumnAndRow(2 + $i * 2, 1, 2 + $i * 2 + 1, 1);
+    $sheet->setCellValueByColumnAndRow(2 + $i * 2, 1, 'Блок ' . ($i + 1));
+    $sheet->getColumnDimensionByColumn(2 + $i * 2)->setAutoSize(true);
+
+    $sheet->setCellValueByColumnAndRow(2 + $i * 2, 2, 'Баллы');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 2 + 1, 2, 'Словесная оценка');
+
+
+    $sheet->getColumnDimensionByColumn(2 + $i * 2)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 2 + 1)->setAutoSize(true);
+}
+
+$query = "(SELECT name FROM groups)";
+$resultGroups = mysqli_query($connection, $query);
+$i = 3;
+
+while($group = mysqli_fetch_array($resultGroups)){
+    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
+    $resultUsers = mysqli_query($connection, $query);
+
+    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+
+        // Выводим группу
+        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
+        // Применяем выравнивание
+        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        // Выводим имя и фамилию
+        $userName = $usersInfo[1] . " " . $usersInfo[0];
+        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        // Выводим нормативы
+
+        $temp = 2;
+        for($j = 1; $j <= 8; $j++){
+            $query = "(SELECT * FROM health WHERE user_id='$usersInfo[2]' AND block_id='$j')";
+
+            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
+            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $resultPoints = mysqli_query($connection, $query);
+            $points = mysqli_fetch_array($resultPoints);
+            if($points[0] != NULL){
+                $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
+                $temp += 1;
+                if($points[10] >= 16)
+                    $points[10] = "Высокий";
+                elseif($points[10] >= 12)
+                    $points[10] = "Выше среднего";
+                elseif($points[10] >= 7)
+                    $points[10] = "Средний";
+                elseif($points > 3)
+                    $points[10] = "Низкий";
+                elseif($points <= 3)
+                    $points[10] = "Ниже среднего";
+                $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
+                $temp += 1;
+            }
+            else{
+                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+                $temp += 1;
+                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+                $temp += 1;
+            }
+        }
+        $i++;
+    }
+}
 
 header ( "Expires: Mon, 1 Apr 1974 05:00:00 GMT" );
 header ( "Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT" );
