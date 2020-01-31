@@ -541,86 +541,10 @@ while($group = mysqli_fetch_array($resultGroups)){
     }
 }
 
-/////////////////////////////// Теория /////////////////////////////////////////
-$xls->createSheet();
-// Устанавливаем индекс активного листа
-$xls->setActiveSheetIndex(3);
-// Получаем активный лист
-$sheet = $xls->getActiveSheet();
-// Подписываем лист
-$sheet->setTitle('Теория');
-
-for($col = 'A'; $col <= 'J'; $col++) {
-    $sheet->getColumnDimension($col)->setAutoSize(true);
-}
-// Вставляем текст в ячейку A1
-$sheet->setCellValue("A1", 'Группа');
-$sheet->getStyle('A1')->getFill()->setFillType(
-    PHPExcel_Style_Fill::FILL_SOLID);
-$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
-$sheet->getStyle('A1')->getAlignment()->setHorizontal(
-    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-// Вставляем текст в ячейку B1
-$sheet->setCellValue("B1", 'Ф.И.О.');
-$sheet->getStyle('B1')->getFill()->setFillType(
-    PHPExcel_Style_Fill::FILL_SOLID);
-$sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
-$sheet->getStyle('B1')->getAlignment()->setHorizontal(
-    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
-$i = 3;
-
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
-
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
-
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        // Выводим Баллы 2 3 4  5 6 7  8 9 10
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='3' AND block_id='$j')";
-
-            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
-            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $resultPoints = mysqli_query($connection, $query);
-            $points = mysqli_fetch_array($resultPoints);
-            if($points[0] != NULL){
-                $sheet->setCellValueByColumnAndRow($temp, $i, '+');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
-                $temp += 1;
-            }
-            else{
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-            }
-        }
-
-        $i++;
-    }
-}
-
-
 /////////////////////////////// Теория ответы /////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
-$xls->setActiveSheetIndex(4);
+$xls->setActiveSheetIndex(3);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -723,7 +647,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 /////////////////////////////// Функциональные пробы /////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
-$xls->setActiveSheetIndex(5);
+$xls->setActiveSheetIndex(4);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -757,7 +681,7 @@ $sheet->getStyle('B1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 for($i = 0; $i < 8; $i++){//Блоки
-    $sheet->mergeCellsByColumnAndRow(2 + $i * 7, 1, 2 + $i * 7 + 65, 1);
+    $sheet->mergeCellsByColumnAndRow(2 + $i * 7, 1, 2 + $i * 7 + 6, 1);
     $sheet->setCellValueByColumnAndRow(2 + $i * 7, 1, 'Блок ' . ($i + 1));
     $sheet->getColumnDimensionByColumn(2 + $i * 7)->setAutoSize(true);
 
@@ -850,7 +774,7 @@ while($group = mysqli_fetch_array($resultGroups)){
 /////////////////////////////// Здоровье по Апанасенко /////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
-$xls->setActiveSheetIndex(6);
+$xls->setActiveSheetIndex(5);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -944,8 +868,12 @@ while($group = mysqli_fetch_array($resultGroups)){
                     $points[10] = "Ниже среднего";
                 $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
                 $temp += 1;
+                $sheet->setCellValueByColumnAndRow($temp, $i, $points[11]);
+                $temp += 1;
             }
             else{
+                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+                $temp += 1;
                 $sheet->setCellValueByColumnAndRow($temp, $i, '-');
                 $temp += 1;
                 $sheet->setCellValueByColumnAndRow($temp, $i, '-');
