@@ -18,7 +18,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Physical Education Tests</title>
+    <title>Мониторинг физического воспитания</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap&subset=cyrillic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="../css/reset.css">
@@ -102,8 +102,11 @@
             $rowBlock = mysqli_fetch_array($resultBlock);
             if($rowBlock)
                 $isDone = 1;
-            if($isDone && $rowBlock[3])
-                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[3]</div>";
+            if($isDone && $rowBlock[3]){
+                echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": " . $rowBlock[3];
+                if($testId == 2) echo " " . $rowBlock[6];
+                echo "</div>";
+            }
             else if($isDone && $testId == 3 && $rowBlock[3] != NULL)
                 echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": +</div>";
             else if($isDone && !$rowBlock[3] && $rowBlock[3] == NULL)

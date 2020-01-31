@@ -285,6 +285,7 @@ body{
 }
 
 .test-block .block-elem{
+    font-size: 16px;
     padding: 10px 30px;
     background: #fff;
     border-top: 1px solid #043965;
