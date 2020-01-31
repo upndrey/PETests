@@ -47,6 +47,19 @@ body{
     line-height: normal;
 }
 
+.logout{
+    padding: 10px;
+    background: #fafafa;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.logout:hover{
+    color: #fafafa;
+    background: #000;
+}
+
 .login-block{
     align-self: center;
 }
@@ -433,6 +446,7 @@ body{
 .funcTest-table{
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -440,6 +454,7 @@ body{
     padding: 10px;
     border: 1px solid #000;
     vertical-align:middle;
+    text-align: center;
 }
 
 .health-link{

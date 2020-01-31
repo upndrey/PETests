@@ -103,3 +103,7 @@ color: #eee; //цвет шрифта в обычном состоянии
 font-size: 11px; // Размер шрифта
 font-family: Tahoma; // Стиль шрифта
 }
+
+a, a:active, a:visited{
+    color: black;
+}

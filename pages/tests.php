@@ -36,7 +36,7 @@
     </div>
 </header>
 <div class="container tests">
-    <h2>Выберите тест:</h2>
+    <h2>Пройти теоретические тесты:</h2>
     <?
     $testId = 1;
     while ($testId != 4) {
@@ -125,7 +125,7 @@
 </div>
 
 <div class="container tests practice">
-
+    <h2>Пройти практические тесты:</h2>
     <?
     $currBlock = 1;
     for(; $currBlock <= 8; $currBlock++){
@@ -243,7 +243,7 @@
         echo "<a href='./health.php' class='test-link health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
     }
     $blockId = 1;
-    echo "<div class='test-block'>";
+    echo "<div class='test-block health-block-elem'>";
     while ($blockId != 9) {
         $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
         $resultBlock = mysqli_query($connection, $query);
@@ -296,6 +296,9 @@
     echo "</div>";
     $testId++;
     ?>
+    <div class="test-help">
+        Проходить практические тесты разрешено только во время занятий по физической культуре.
+    </div>
 </div>
 
 </body>

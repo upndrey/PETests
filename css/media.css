@@ -184,6 +184,19 @@
         flex-direction: row;
     }
 
+    .health-block-elem{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .health-block-elem .block-elem{
+        width: 100%;
+        border: 1px solid #000;
+        padding: 10px 20px;
+        margin: 2px;
+    }
 }
 
 
