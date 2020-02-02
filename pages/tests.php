@@ -154,11 +154,11 @@
 
     if($isTestDone){
         $_SESSION['funcTest'] = 1;
-        echo "<a href='./funcTest.php' class='test-link test-done'>Пройти функциональные пробы</a>";
+        echo "<a href='./funcTest.php' class='test-link test-done'>Физическая подготовленность</a>";
     }
     else{
         $_SESSION['funcTest'] = NULL;
-        echo "<a href='./funcTest.php' class='test-link'>Пройти функциональные пробы</a>";
+        echo "<a href='./funcTest.php' class='test-link'>Физическая подготовленность</a>";
     }
 
 
@@ -239,11 +239,11 @@
 
     if($isTestDone){
         $_SESSION['health'] = 1;
-        echo "<a href='./health.php' class='test-link test-done health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
+        echo "<a href='./health.php' class='test-link test-done health-link'>Функциональные пробы + Уровень здоровья по Апонасенко</a>";
     }
     else{
         $_SESSION['health'] = NULL;
-        echo "<a href='./health.php' class='test-link health-link'>Узнать уровень здоровья (по Апанасенко)</a>";
+        echo "<a href='./health.php' class='test-link health-link'>Функциональные пробы + Уровень здоровья по Апонасенко</a>";
     }
     $blockId = 1;
     echo "<div class='test-block health-block-elem'>";
