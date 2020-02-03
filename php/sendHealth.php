@@ -39,7 +39,7 @@ $arterial_press = $_POST['arterial-press'];
 $recovery = $_POST['recovery'];
 $stat = [0, 0, 0, 0, 0];
 
-$temp = $weight / ($height * $height);
+$temp =  round( $weight / ($height * $height), 1);
 if($loginId[1] == "мужской"){
     if($temp >= 28.1)
         $stat[0] = 2;
@@ -64,13 +64,14 @@ else{
     elseif($temp <= 16.9)
         $stat[0] = -2;
 }
-$temp = $lung_capacity / $weight;
+
+$temp =  round( $lung_capacity / $weight, 1);
 if($loginId[1] == "мужской"){
-    if($temp >= 66)
+    if($temp > 65)
         $stat[1] = 3;
-    elseif($temp >= 61)
+    elseif($temp > 60)
         $stat[1] = 2;
-    elseif($temp >= 56)
+    elseif($temp > 55)
         $stat[1] = 1;
     elseif($temp > 50)
         $stat[1] = 0;
@@ -78,11 +79,11 @@ if($loginId[1] == "мужской"){
         $stat[1] = -1;
 }
 else{
-    if($temp >= 56)
+    if($temp > 55)
         $stat[1] = 3;
-    elseif($temp >= 51)
+    elseif($temp > 50)
         $stat[1] = 2;
-    elseif($temp >= 46)
+    elseif($temp > 45)
         $stat[1] = 1;
     elseif($temp > 40)
         $stat[1] = 0;
@@ -90,13 +91,13 @@ else{
         $stat[1] = -1;
 }
 
-$temp = $dynamo * 100 / $weight;
+$temp =  round( $dynamo * 100 / $weight, 1);
 if($loginId[1] == "мужской"){
-    if($temp >= 81)
+    if($temp > 80)
         $stat[2] = 3;
-    elseif($temp >= 71)
+    elseif($temp > 70)
         $stat[2] = 2;
-    elseif($temp >= 66)
+    elseif($temp > 65)
         $stat[2] = 1;
     elseif($temp > 60)
         $stat[2] = 0;
@@ -104,11 +105,11 @@ if($loginId[1] == "мужской"){
         $stat[2] = -1;
 }
 else{
-    if($temp >= 61)
+    if($temp > 60)
         $stat[2] = 3;
-    elseif($temp >= 56)
+    elseif($temp > 55)
         $stat[2] = 2;
-    elseif($temp >= 51)
+    elseif($temp > 50)
         $stat[2] = 1;
     elseif($temp > 40)
         $stat[2] = 0;
@@ -116,29 +117,29 @@ else{
         $stat[2] = -1;
 }
 
-$temp = $heart_rate * $arterial_press / 100;
+$temp =  round($heart_rate * $arterial_press / 100, 1);
 if($loginId[1] == "мужской"){
-    if($temp <= 69)
+    if($temp <= 70)
         $stat[3] = 5;
-    elseif($temp <= 84)
+    elseif($temp <= 85)
         $stat[3] = 3;
-    elseif($temp <= 94)
+    elseif($temp <= 95)
         $stat[3] = 0;
-    elseif($temp < 111)
+    elseif($temp <= 110)
         $stat[3] = -1;
-    elseif($temp >= 111)
+    elseif($temp > 110)
         $stat[3] = -2;
 }
 else{
-    if($temp <= 69)
+    if($temp <= 70)
         $stat[3] = 5;
-    elseif($temp <= 84)
+    elseif($temp <= 85)
         $stat[3] = 3;
-    elseif($temp <= 94)
+    elseif($temp <= 95)
         $stat[3] = 0;
-    elseif($temp < 111)
+    elseif($temp <= 110)
         $stat[3] = -1;
-    elseif($temp >= 111)
+    elseif($temp > 110)
         $stat[3] = -2;
 }
 
@@ -146,28 +147,27 @@ $temp = $recovery;
 if($loginId[1] == "мужской"){
     if($temp <= 60)
         $stat[4] = 7;
-    elseif($temp <= 89)
+    elseif($temp <= 90)
         $stat[4] = 5;
-    elseif($temp <= 119)
+    elseif($temp <= 120)
         $stat[4] = 3;
-    elseif($temp < 180)
+    elseif($temp <= 180)
         $stat[4] = 1;
-    elseif($temp >= 180)
+    elseif($temp > 180)
         $stat[4] = -2;
 }
 else{
     if($temp <= 60)
         $stat[4] = 7;
-    elseif($temp <= 89)
+    elseif($temp <= 90)
         $stat[4] = 5;
-    elseif($temp <= 119)
+    elseif($temp <= 120)
         $stat[4] = 3;
-    elseif($temp < 180)
+    elseif($temp <= 180)
         $stat[4] = 1;
-    elseif($temp >= 180)
+    elseif($temp > 180)
         $stat[4] = -2;
 }
-
 $result = $stat[0] + $stat[1] + $stat[2] + $stat[3] + $stat[4];
 
 

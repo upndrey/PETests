@@ -862,10 +862,10 @@ while($group = mysqli_fetch_array($resultGroups)){
                     $points[10] = "Выше среднего";
                 elseif($points[10] >= 7)
                     $points[10] = "Средний";
-                elseif($points > 3)
-                    $points[10] = "Низкий";
-                elseif($points <= 3)
+                elseif($points[10] > 3)
                     $points[10] = "Ниже среднего";
+                elseif($points[10] <= 3)
+                    $points[10] = "Низкий";
                 $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
                 $temp += 1;
                 $sheet->setCellValueByColumnAndRow($temp, $i, $points[11]);
