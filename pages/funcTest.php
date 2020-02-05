@@ -42,27 +42,27 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
     <form action="../php/sendFuncTest.php" method="post" class="funcTestForm">
         <div>
             <label for="chin-up">Подтягивания</label>
-            <input id="chin-up" name="chin-up" type="number" placeholder="0" required />
+            <input id="chin-up" name="chin-up" type="number" step="0.01" placeholder="0" required />
         </div>
         <div>
             <label for="long-jump">Прыжок в длину</label>
-            <input id="long-jump" name="long-jump" type="number" placeholder="0" required /><span> (см)</span>
+            <input id="long-jump" name="long-jump" type="number" step="0.01" placeholder="0" required /><span> (см)</span>
         </div>
         <div>
             <label for="flexibility">Гибкость</label>
-            <input id="flexibility" name="flexibility" type="number" placeholder="0" required /><span> (см)</span>
+            <input id="flexibility" name="flexibility" type="number" step="0.01" placeholder="0" required /><span> (см)</span>
         </div>
         <div>
             <label for="abs">Пресс</label>
-            <input id="abs" name="abs" type="number" placeholder="0" required />
+            <input id="abs" name="abs" type="number" step="0.01" placeholder="0" required />
         </div>
         <div>
             <label for="skipping-rope">Скакалка 1 мин.</label>
-            <input id="skipping-rope" name="skipping-rope" type="number" placeholder="0" required />
+            <input id="skipping-rope" name="skipping-rope" step="0.01" type="number" placeholder="0" required />
         </div>
         <div>
             <label for="running">Бег 12 мин.</label>
-            <input id="running" name="running" type="number" placeholder="0" required />
+            <input id="running" name="running" type="number" step="0.01" placeholder="0" required />
         </div>
         <input type="hidden" name="test" value="func">
         <input type="submit" value="Отправить" class="send-result">
