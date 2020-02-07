@@ -7,6 +7,7 @@ $pass = mysqli_real_escape_string($connection, $pass);
 $result = mysqli_query($connection, "(SELECT password FROM users WHERE login='$login')");
 $hash = mysqli_fetch_array($result);
 if(password_verify($pass, $hash[0])){
+    $_SESSION['message'] = "";
     session_start();
     $_SESSION['login'] = $login;
     if($login == "admin")
@@ -15,6 +16,9 @@ if(password_verify($pass, $hash[0])){
         header('Location: /pages/tests.php');
     exit;
 }
-else
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+else{
+    session_start();
+    $_SESSION['message'] = "Аккаунт с таким логином не существует, либо введен неверный пароль!";
+    header('Location: ../index.php');
+}
 ?>

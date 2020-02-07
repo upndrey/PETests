@@ -6,6 +6,7 @@ $login = mysqli_real_escape_string($connection, $login);
 $result = mysqli_query($connection, "(SELECT id FROM users WHERE login='$login')");
 $result =  mysqli_fetch_array($result);
 if(!$result){
+    $_SESSION['message'] = "";
     $pass = $_POST['pass'];
     $pass = mysqli_real_escape_string($connection, $pass);
     $hash = password_hash($pass, PASSWORD_DEFAULT);
@@ -32,6 +33,9 @@ if(!$result){
         header('Location: /pages/tests.php');
     exit;
 }
-else
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+else{
+    session_start();
+    $_SESSION['message'] = "Аккаунт с таким именем уже существует";
+    header('Location: ../index.php');
+}
 ?>
