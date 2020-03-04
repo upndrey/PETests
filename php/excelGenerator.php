@@ -884,6 +884,135 @@ while($group = mysqli_fetch_array($resultGroups)){
     }
 }
 
+
+/////////////////////////////// Входные данные для здоровья /////////////////////////////////////////
+// Устанавливаем индекс активного листа
+$xls->createSheet();
+$xls->setActiveSheetIndex(6);
+// Получаем активный лист
+$sheet = $xls->getActiveSheet();
+// Подписываем лист
+$sheet->setTitle('Входные данные для здоровья');
+
+for($col = 'A'; $col <= 'Z'; $col++) {
+    $sheet->getColumnDimension($col)->setWidth(20);
+}
+// Вставляем текст в ячейку A1
+$sheet->setCellValue("A1", 'Группа');
+$sheet->getStyle('A1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('A1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+// Вставляем текст в ячейку B1
+$sheet->setCellValue("B1", 'Ф.И.О.');
+$sheet->getStyle('B1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('B1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$query = "(SELECT name FROM groups)";
+$resultGroups = mysqli_query($connection, $query);
+$i = 3;
+
+while($group = mysqli_fetch_array($resultGroups)){
+    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
+    $resultUsers = mysqli_query($connection, $query);
+
+    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+
+        // Выводим группу
+        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
+        // Применяем выравнивание
+        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        // Выводим имя и фамилию
+        $userName = $usersInfo[1] . " " . $usersInfo[0];
+        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+        $temp = 2;
+        for($j = 1; $j <= 8; $j++){
+            $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
+            $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 7, 1);
+            $sheet->getStyleByColumnAndRow($temp, 1, $temp + 7, 1)->applyFromArray($styleArray);
+
+            $query = "(SELECT * FROM health WHERE block_id='$j' AND user_id='$usersInfo[2]')";
+            $resultHealth = mysqli_query($connection, $query);
+            if($health = mysqli_fetch_array($resultHealth)) {
+                for($it = 3; $it <= 10; $it++){
+                    $healthTitle = "";
+                    switch ($it){
+                        case 3:
+                            $healthTitle = "Вес";
+                            break;
+                        case 4:
+                            $healthTitle = "Рост";
+                            break;
+                        case 5:
+                            $healthTitle = "Объем легких";
+                            break;
+                        case 6:
+                            $healthTitle = "Сила кисти";
+                            break;
+                        case 7:
+                            $healthTitle = "Пульс";
+                            break;
+                        case 8:
+                            $healthTitle = "Давление";
+                            break;
+                        case 9:
+                            $healthTitle = "Восстановление";
+                            break;
+                        case 10:
+                            $healthTitle = "Результат";
+                            break;
+                    }
+                    $sheet->setCellValueByColumnAndRow($temp, 2, $healthTitle);
+                    $sheet->setCellValueByColumnAndRow($temp, $i, $health[$it]);
+                    $temp++;
+                }
+            }
+            else {
+                for($it = 3; $it <= 10; $it++) {
+                    $healthTitle = "";
+                    switch ($it) {
+                        case 3:
+                            $healthTitle = "Вес";
+                            break;
+                        case 4:
+                            $healthTitle = "Рост";
+                            break;
+                        case 5:
+                            $healthTitle = "Объем легких";
+                            break;
+                        case 6:
+                            $healthTitle = "Сила кисти";
+                            break;
+                        case 7:
+                            $healthTitle = "Пульс";
+                            break;
+                        case 8:
+                            $healthTitle = "Давление";
+                            break;
+                        case 9:
+                            $healthTitle = "Восстановление";
+                            break;
+                        case 10:
+                            $healthTitle = "Результат";
+                            break;
+                    }
+                    $sheet->setCellValueByColumnAndRow($temp, 2, $healthTitle);
+                    $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+                    $temp++;
+                }
+            }
+        }
+        $i++;
+    }
+}
+
+
+
 header ( "Expires: Mon, 1 Apr 1974 05:00:00 GMT" );
 header ( "Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT" );
 header ( "Cache-Control: no-cache, must-revalidate" );
