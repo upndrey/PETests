@@ -42,9 +42,9 @@ $stat = [0, 0, 0, 0, 0];
 $temp =  round( $weight / ($height * $height), 1);
 if($loginId[1] == "мужской"){
     if($temp >= 28.1)
-        $stat[0] = 2;
+        $stat[0] = -2;
     elseif($temp >= 25.1)
-        $stat[0] = 1;
+        $stat[0] = -1;
     elseif($temp >= 20.1)
         $stat[0] = 0;
     elseif($temp > 18.9)
@@ -54,9 +54,9 @@ if($loginId[1] == "мужской"){
 }
 else{
     if($temp >= 26.1)
-        $stat[0] = 2;
+        $stat[0] = -2;
     elseif($temp >= 23.9)
-        $stat[0] = 1;
+        $stat[0] = -1;
     elseif($temp >= 18.1)
         $stat[0] = 0;
     elseif($temp > 16.9)
@@ -67,11 +67,11 @@ else{
 
 $temp =  round( $lung_capacity / $weight, 1);
 if($loginId[1] == "мужской"){
-    if($temp > 65)
+    if($temp >= 66)
         $stat[1] = 3;
-    elseif($temp > 60)
+    elseif($temp >= 61)
         $stat[1] = 2;
-    elseif($temp > 55)
+    elseif($temp >= 56)
         $stat[1] = 1;
     elseif($temp > 50)
         $stat[1] = 0;
@@ -79,11 +79,11 @@ if($loginId[1] == "мужской"){
         $stat[1] = -1;
 }
 else{
-    if($temp > 55)
+    if($temp >= 56)
         $stat[1] = 3;
-    elseif($temp > 50)
+    elseif($temp >= 51)
         $stat[1] = 2;
-    elseif($temp > 45)
+    elseif($temp >= 46)
         $stat[1] = 1;
     elseif($temp > 40)
         $stat[1] = 0;
@@ -93,11 +93,11 @@ else{
 
 $temp =  round( $dynamo * 100 / $weight, 1);
 if($loginId[1] == "мужской"){
-    if($temp > 80)
+    if($temp >= 81)
         $stat[2] = 3;
-    elseif($temp > 70)
+    elseif($temp >= 71)
         $stat[2] = 2;
-    elseif($temp > 65)
+    elseif($temp >= 66)
         $stat[2] = 1;
     elseif($temp > 60)
         $stat[2] = 0;
@@ -105,11 +105,11 @@ if($loginId[1] == "мужской"){
         $stat[2] = -1;
 }
 else{
-    if($temp > 60)
+    if($temp >= 61)
         $stat[2] = 3;
-    elseif($temp > 55)
+    elseif($temp >= 56)
         $stat[2] = 2;
-    elseif($temp > 50)
+    elseif($temp >= 51)
         $stat[2] = 1;
     elseif($temp > 40)
         $stat[2] = 0;
@@ -125,9 +125,9 @@ if($loginId[1] == "мужской"){
         $stat[3] = 3;
     elseif($temp <= 95)
         $stat[3] = 0;
-    elseif($temp <= 110)
+    elseif($temp < 111)
         $stat[3] = -1;
-    elseif($temp > 110)
+    elseif($temp >= 111)
         $stat[3] = -2;
 }
 else{
@@ -137,9 +137,9 @@ else{
         $stat[3] = 3;
     elseif($temp <= 95)
         $stat[3] = 0;
-    elseif($temp <= 110)
+    elseif($temp < 111)
         $stat[3] = -1;
-    elseif($temp > 110)
+    elseif($temp >= 111)
         $stat[3] = -2;
 }
 

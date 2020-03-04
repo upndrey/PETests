@@ -41,7 +41,7 @@ if(isset($_POST["saveResult"])){
 if(isset($_POST["saveTimeResult"])){
     $i = 0;
     $blockId = 1;
-    while($blockId < 5){
+    while($blockId < 9){
         $groupId1 = explode('.', $_POST['time' . $i++]);
         $groupId2 = explode('.', $_POST['time' . $i++]);
         if(strlen($groupId1[0]) == 1){
