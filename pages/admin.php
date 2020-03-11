@@ -86,6 +86,14 @@ $loginId = mysqli_fetch_array($resultLoginId);
     </div>
 
     <form action="../php/admin.php" class="saveExcelBlock" method="post">
+        <select required name="excelGroup" class="excelGroup">
+            <?
+            $groups = mysqli_query($connection, "(SELECT name FROM groups)");
+            while ($rowGroup = mysqli_fetch_array($groups)) {
+                echo "<option>" . $rowGroup[0] . "</option>";
+            }
+            ?>
+        </select>
         <input type="hidden" name="saveResult" value="1">
         <input type="submit" name="sendResult" value="Скачать excel">
     </form>

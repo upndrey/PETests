@@ -506,3 +506,8 @@ body{
     background: white;
     color: #25ae88;
 }
+
+.excelGroup {
+    padding: 8px 10px;
+    height: 100%;
+}

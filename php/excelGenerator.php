@@ -10,7 +10,7 @@ require_once('../Classes/PHPExcel/Writer/Excel5.php');
 
 // Создаем объект класса PHPExcel
 $xls = new PHPExcel();
-
+$group = $_POST['excelGroup'];
 
 
 $styleArray = array(
@@ -140,54 +140,50 @@ $sheet->getStyle('Q1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $sheet->setCellValue("Q2", 'Баллы');
 $sheet->setCellValue("R2", 'Дата');
-
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    // Выводим Баллы 2 3 4  5 6 7  8 9 10
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='1' AND block_id='$j')";
+
+        $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
         setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        // Выводим Баллы 2 3 4  5 6 7  8 9 10
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='1' AND block_id='$j')";
-
-            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
-            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $resultPoints = mysqli_query($connection, $query);
-            $points = mysqli_fetch_array($resultPoints);
-            if($points[0] != NULL){
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[0]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
-                $temp += 1;
-            }
-            else{
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-            }
+        $resultPoints = mysqli_query($connection, $query);
+        $points = mysqli_fetch_array($resultPoints);
+        if($points[0] != NULL){
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[0]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
+            $temp += 1;
         }
-
-        $i++;
+        else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+        }
     }
+
+    $i++;
 }
+
 /////////////////////////////// Уровень потребности /////////////////////////////////////////
 $xls->createSheet();
 // Устанавливаем индекс активного листа
@@ -318,57 +314,52 @@ $sheet->setCellValue("X2", 'Баллы');
 $sheet->setCellValue("Y2", 'Уровень');
 $sheet->setCellValue("Z2", 'Дата');
 
-
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    // Выводим Баллы 2 3 4  5 6 7  8 9 10
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $query = "(SELECT points, level, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='2' AND block_id='$j')";
+
+        $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
         setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        // Выводим Баллы 2 3 4  5 6 7  8 9 10
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $query = "(SELECT points, level, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='2' AND block_id='$j')";
-
-            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
-            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $resultPoints = mysqli_query($connection, $query);
-            $points = mysqli_fetch_array($resultPoints);
-            if($points[0] != NULL){
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[0]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[2]);
-                $temp += 1;
-            }
-            else{
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-            }
+        $resultPoints = mysqli_query($connection, $query);
+        $points = mysqli_fetch_array($resultPoints);
+        if($points[0] != NULL){
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[0]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[2]);
+            $temp += 1;
         }
-
-        $i++;
+        else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+        }
     }
+
+    $i++;
 }
 
 /////////////////////////////// Отношение к состоянию здоровья /////////////////////////////////////////
@@ -492,54 +483,50 @@ $sheet->getStyle('Q1')->getAlignment()->setHorizontal(
 $sheet->setCellValue("Q2", 'Пройден');
 $sheet->setCellValue("R2", 'Дата');
 
-
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    // Выводим Баллы 2 3 4  5 6 7  8 9 10
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='3' AND block_id='$j')";
+
+        $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
         setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        // Выводим Баллы 2 3 4  5 6 7  8 9 10
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $query = "(SELECT points, date FROM results WHERE user_id='$usersInfo[2]' AND test_id='3' AND block_id='$j')";
-
-            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
-            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $resultPoints = mysqli_query($connection, $query);
-            $points = mysqli_fetch_array($resultPoints);
-            if($points[0] != NULL){
-                $sheet->setCellValueByColumnAndRow($temp, $i, '+');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
-                $temp += 1;
-            }
-            else{
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-            }
+        $resultPoints = mysqli_query($connection, $query);
+        $points = mysqli_fetch_array($resultPoints);
+        if($points[0] != NULL){
+            $sheet->setCellValueByColumnAndRow($temp, $i, '+');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[1]);
+            $temp += 1;
         }
-
-        $i++;
+        else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+        }
     }
+
+    $i++;
 }
+
 
 /////////////////////////////// Теория ответы /////////////////////////////////////////
 // Устанавливаем индекс активного листа
@@ -568,79 +555,75 @@ $sheet->getStyle('B1')->getFill()->setFillType(
 $sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
 $sheet->getStyle('B1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
 
-            $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
-            $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 9, 1);
-            $sheet->getStyleByColumnAndRow($temp, 1, $temp + 9, 1)->applyFromArray($styleArray);
+        $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
+        $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 9, 1);
+        $sheet->getStyleByColumnAndRow($temp, 1, $temp + 9, 1)->applyFromArray($styleArray);
 
-            $query = "(SELECT question_type, text FROM questions WHERE test_id='3')";
-            $resultQuestions = mysqli_query($connection, $query);
-            $questionId = 1;
-            while($questions = mysqli_fetch_array($resultQuestions)) {
-                $sheet->setCellValueByColumnAndRow($temp, 2, $questions[1]);
-                $answerStr = "";
-                if($questions[0] == 'text'){
-                    $query = "(SELECT id FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
-                    $resultAnswerVariants = mysqli_query($connection, $query);
-                    $answerVariants = mysqli_fetch_array($resultAnswerVariants);
-                    $query = "(SELECT text FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
-                    $resultAnswer = mysqli_query($connection, $query);
-                    if($answer = mysqli_fetch_array($resultAnswer))
-                        $answerStr = $answer[0];
-                }
-                else if($questions[0] == 'radio'){
-                    $query = "(SELECT id, text FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
-                    $resultAnswerVariants = mysqli_query($connection, $query);
-                    while($answerVariants = mysqli_fetch_array($resultAnswerVariants)){
-                        $query = "(SELECT id FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
-                        $resultAnswer = mysqli_query($connection, $query);
-                        if($answer = mysqli_fetch_array($resultAnswer)){
-                            $answerStr = $answerVariants[1];
-                            break;
-                        }
-                    }
-                }
-                else if($questions[0] == 'checkbox'){
-                    $query = "(SELECT id, text FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
-                    $resultAnswerVariants = mysqli_query($connection, $query);
-                    while($answerVariants = mysqli_fetch_array($resultAnswerVariants)){
-                        $query = "(SELECT id FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
-                        $resultAnswer = mysqli_query($connection, $query);
-                        if($answer = mysqli_fetch_array($resultAnswer)){
-                            if($answerStr != "")
-                                $answerStr .= ", " . $answerVariants[1];
-                            else
-                                $answerStr = $answerVariants[1];
-                        }
-                    }
-                }
-                $sheet->setCellValueByColumnAndRow($temp, $i, $answerStr);
-                $temp++;
-                $questionId++;
+        $query = "(SELECT question_type, text FROM questions WHERE test_id='3')";
+        $resultQuestions = mysqli_query($connection, $query);
+        $questionId = 1;
+        while($questions = mysqli_fetch_array($resultQuestions)) {
+            $sheet->setCellValueByColumnAndRow($temp, 2, $questions[1]);
+            $answerStr = "";
+            if($questions[0] == 'text'){
+                $query = "(SELECT id FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
+                $resultAnswerVariants = mysqli_query($connection, $query);
+                $answerVariants = mysqli_fetch_array($resultAnswerVariants);
+                $query = "(SELECT text FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
+                $resultAnswer = mysqli_query($connection, $query);
+                if($answer = mysqli_fetch_array($resultAnswer))
+                    $answerStr = $answer[0];
             }
+            else if($questions[0] == 'radio'){
+                $query = "(SELECT id, text FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
+                $resultAnswerVariants = mysqli_query($connection, $query);
+                while($answerVariants = mysqli_fetch_array($resultAnswerVariants)){
+                    $query = "(SELECT id FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
+                    $resultAnswer = mysqli_query($connection, $query);
+                    if($answer = mysqli_fetch_array($resultAnswer)){
+                        $answerStr = $answerVariants[1];
+                        break;
+                    }
+                }
+            }
+            else if($questions[0] == 'checkbox'){
+                $query = "(SELECT id, text FROM answer_variants WHERE question_id='$questionId' AND test_id='3')";
+                $resultAnswerVariants = mysqli_query($connection, $query);
+                while($answerVariants = mysqli_fetch_array($resultAnswerVariants)){
+                    $query = "(SELECT id FROM answers WHERE answer_variant_id='$answerVariants[0]' AND block_id='$j' AND user_id='$usersInfo[2]')";
+                    $resultAnswer = mysqli_query($connection, $query);
+                    if($answer = mysqli_fetch_array($resultAnswer)){
+                        if($answerStr != "")
+                            $answerStr .= ", " . $answerVariants[1];
+                        else
+                            $answerStr = $answerVariants[1];
+                    }
+                }
+            }
+            $sheet->setCellValueByColumnAndRow($temp, $i, $answerStr);
+            $temp++;
+            $questionId++;
         }
-        $i++;
     }
+    $i++;
 }
 
 
@@ -703,72 +686,68 @@ for($i = 0; $i < 8; $i++){//Блоки
     $sheet->getColumnDimensionByColumn(2 + $i * 7 + 6)->setAutoSize(true);
 }
 
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    // Выводим нормативы
+
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $query = "(SELECT * FROM func_test WHERE user_id='$usersInfo[2]' AND block_id='$j')";
+
+        $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
         setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        // Выводим нормативы
-
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $query = "(SELECT * FROM func_test WHERE user_id='$usersInfo[2]' AND block_id='$j')";
-
-            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
-            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $resultPoints = mysqli_query($connection, $query);
-            $points = mysqli_fetch_array($resultPoints);
-            if($points[0] != NULL){
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[3]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[4]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[5]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[6]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[7]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[8]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[9]);
-                $temp += 1;
-            }
-            else{
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-            }
+        $resultPoints = mysqli_query($connection, $query);
+        $points = mysqli_fetch_array($resultPoints);
+        if($points[0] != NULL){
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[3]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[4]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[5]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[6]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[7]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[8]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[9]);
+            $temp += 1;
         }
-        $i++;
+        else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+        }
     }
+    $i++;
 }
 
 /////////////////////////////// Здоровье по Апанасенко /////////////////////////////////////////
@@ -822,67 +801,64 @@ for($i = 0; $i < 8; $i++){//Блоки
     $sheet->getColumnDimensionByColumn(2 + $i * 3 + 2)->setAutoSize(true);
 }
 
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    // Выводим нормативы
+
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $query = "(SELECT * FROM health WHERE user_id='$usersInfo[2]' AND block_id='$j')";
+
+        $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
         setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        // Выводим нормативы
-
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $query = "(SELECT * FROM health WHERE user_id='$usersInfo[2]' AND block_id='$j')";
-
-            $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
-            setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $resultPoints = mysqli_query($connection, $query);
-            $points = mysqli_fetch_array($resultPoints);
-            if($points[0] != NULL){
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
-                $temp += 1;
-                if($points[10] >= 16)
-                    $points[10] = "Высокий";
-                elseif($points[10] >= 12)
-                    $points[10] = "Выше среднего";
-                elseif($points[10] >= 7)
-                    $points[10] = "Средний";
-                elseif($points[10] > 3)
-                    $points[10] = "Ниже среднего";
-                elseif($points[10] <= 3)
-                    $points[10] = "Низкий";
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, $points[11]);
-                $temp += 1;
-            }
-            else{
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                $temp += 1;
-            }
+        $resultPoints = mysqli_query($connection, $query);
+        $points = mysqli_fetch_array($resultPoints);
+        if($points[0] != NULL){
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
+            $temp += 1;
+            if($points[10] >= 16)
+                $points[10] = "Высокий";
+            elseif($points[10] >= 12)
+                $points[10] = "Выше среднего";
+            elseif($points[10] >= 7)
+                $points[10] = "Средний";
+            elseif($points[10] > 3)
+                $points[10] = "Ниже среднего";
+            elseif($points[10] <= 3)
+                $points[10] = "Низкий";
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[11]);
+            $temp += 1;
         }
-        $i++;
+        else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+        }
     }
+    $i++;
 }
+
 
 
 /////////////////////////////// Входные данные для здоровья /////////////////////////////////////////
@@ -912,103 +888,99 @@ $sheet->getStyle('B1')->getFill()->setFillType(
 $sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
 $sheet->getStyle('B1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$query = "(SELECT name FROM groups)";
-$resultGroups = mysqli_query($connection, $query);
 $i = 3;
 
-while($group = mysqli_fetch_array($resultGroups)){
-    $query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group[0]')";
-    $resultUsers = mysqli_query($connection, $query);
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
 
-    while($usersInfo = mysqli_fetch_array($resultUsers)) {
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
 
-        // Выводим группу
-        $sheet->setCellValueByColumnAndRow(0, $i, $group[0]);
-        // Применяем выравнивание
-        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
-        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        // Выводим имя и фамилию
-        $userName = $usersInfo[1] . " " . $usersInfo[0];
-        $sheet->setCellValueByColumnAndRow(1, $i, $userName);
-        $temp = 2;
-        for($j = 1; $j <= 8; $j++){
-            $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
-            $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 7, 1);
-            $sheet->getStyleByColumnAndRow($temp, 1, $temp + 7, 1)->applyFromArray($styleArray);
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $sheet->setCellValueByColumnAndRow($temp, 1, "Блок" . $j);
+        $sheet->mergeCellsByColumnAndRow($temp, 1, $temp + 7, 1);
+        $sheet->getStyleByColumnAndRow($temp, 1, $temp + 7, 1)->applyFromArray($styleArray);
 
-            $query = "(SELECT * FROM health WHERE block_id='$j' AND user_id='$usersInfo[2]')";
-            $resultHealth = mysqli_query($connection, $query);
-            if($health = mysqli_fetch_array($resultHealth)) {
-                for($it = 3; $it <= 10; $it++){
-                    $healthTitle = "";
-                    switch ($it){
-                        case 3:
-                            $healthTitle = "Вес";
-                            break;
-                        case 4:
-                            $healthTitle = "Рост";
-                            break;
-                        case 5:
-                            $healthTitle = "Объем легких";
-                            break;
-                        case 6:
-                            $healthTitle = "Сила кисти";
-                            break;
-                        case 7:
-                            $healthTitle = "Пульс";
-                            break;
-                        case 8:
-                            $healthTitle = "Давление";
-                            break;
-                        case 9:
-                            $healthTitle = "Восстановление";
-                            break;
-                        case 10:
-                            $healthTitle = "Результат";
-                            break;
-                    }
-                    $sheet->setCellValueByColumnAndRow($temp, 2, $healthTitle);
-                    $sheet->setCellValueByColumnAndRow($temp, $i, $health[$it]);
-                    $temp++;
+        $query = "(SELECT * FROM health WHERE block_id='$j' AND user_id='$usersInfo[2]')";
+        $resultHealth = mysqli_query($connection, $query);
+        if($health = mysqli_fetch_array($resultHealth)) {
+            for($it = 3; $it <= 10; $it++){
+                $healthTitle = "";
+                switch ($it){
+                    case 3:
+                        $healthTitle = "Вес";
+                        break;
+                    case 4:
+                        $healthTitle = "Рост";
+                        break;
+                    case 5:
+                        $healthTitle = "Объем легких";
+                        break;
+                    case 6:
+                        $healthTitle = "Сила кисти";
+                        break;
+                    case 7:
+                        $healthTitle = "Пульс";
+                        break;
+                    case 8:
+                        $healthTitle = "Давление";
+                        break;
+                    case 9:
+                        $healthTitle = "Восстановление";
+                        break;
+                    case 10:
+                        $healthTitle = "Результат";
+                        break;
                 }
-            }
-            else {
-                for($it = 3; $it <= 10; $it++) {
-                    $healthTitle = "";
-                    switch ($it) {
-                        case 3:
-                            $healthTitle = "Вес";
-                            break;
-                        case 4:
-                            $healthTitle = "Рост";
-                            break;
-                        case 5:
-                            $healthTitle = "Объем легких";
-                            break;
-                        case 6:
-                            $healthTitle = "Сила кисти";
-                            break;
-                        case 7:
-                            $healthTitle = "Пульс";
-                            break;
-                        case 8:
-                            $healthTitle = "Давление";
-                            break;
-                        case 9:
-                            $healthTitle = "Восстановление";
-                            break;
-                        case 10:
-                            $healthTitle = "Результат";
-                            break;
-                    }
-                    $sheet->setCellValueByColumnAndRow($temp, 2, $healthTitle);
-                    $sheet->setCellValueByColumnAndRow($temp, $i, '-');
-                    $temp++;
-                }
+                $sheet->setCellValueByColumnAndRow($temp, 2, $healthTitle);
+                $sheet->setCellValueByColumnAndRow($temp, $i, $health[$it]);
+                $temp++;
             }
         }
-        $i++;
+        else {
+            for($it = 3; $it <= 10; $it++) {
+                $healthTitle = "";
+                switch ($it) {
+                    case 3:
+                        $healthTitle = "Вес";
+                        break;
+                    case 4:
+                        $healthTitle = "Рост";
+                        break;
+                    case 5:
+                        $healthTitle = "Объем легких";
+                        break;
+                    case 6:
+                        $healthTitle = "Сила кисти";
+                        break;
+                    case 7:
+                        $healthTitle = "Пульс";
+                        break;
+                    case 8:
+                        $healthTitle = "Давление";
+                        break;
+                    case 9:
+                        $healthTitle = "Восстановление";
+                        break;
+                    case 10:
+                        $healthTitle = "Результат";
+                        break;
+                }
+                $sheet->setCellValueByColumnAndRow($temp, 2, $healthTitle);
+                $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+                $temp++;
+            }
+        }
     }
+    $i++;
 }
 
 
@@ -1018,7 +990,7 @@ header ( "Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT" );
 header ( "Cache-Control: no-cache, must-revalidate" );
 header ( "Pragma: no-cache" );
 header ( "Content-type: application/vnd.ms-excel" );
-header ( "Content-Disposition: attachment; filename=matrix.xls" );
+header ( "Content-Disposition: attachment; filename=monitoringfk.xls" );
 // Выводим содержимое файла
 $objWriter = new PHPExcel_Writer_Excel5($xls);
 $objWriter->save('php://output');
