@@ -8,6 +8,7 @@ if(!$_POST['test']){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
+require_once "../php/funcTestPoints.php";
 require_once "../php/connection.php";
 $login = $_SESSION['login'];
 $query = "(SELECT id FROM users WHERE login='$login')";
@@ -37,9 +38,11 @@ $abs = $_POST['abs'];
 $skipping_rope = $_POST['skipping-rope'];
 $running = $_POST['running'];
 
+
 $date = getdate();
 $dateResult = $date['mday'] . "." . $date['mon'] . "." . $date['year'];
 //Записываем нормативы в результат
+$query = "INSERT INTO func_test_points (user_id, block_id, chin_up, long_jump, flexibility, abs, skipping_rope, running, date, result) VALUES ('$loginId[0]', '$block_id', '$chin_up', '$long_jump', '$flexibility', '$abs', '$skipping_rope', '$running', '$dateResult')";
 $query = "INSERT INTO func_test (user_id, block_id, chin_up, long_jump, flexibility, abs, skipping_rope, running, date) VALUES ('$loginId[0]', '$block_id', '$chin_up', '$long_jump', '$flexibility', '$abs', '$skipping_rope', '$running', '$dateResult')";
 mysqli_query($connection, $query);
 
