@@ -3,11 +3,6 @@ session_start();
 if(!$_SESSION['login']){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
-
-if(!$_POST['test']){
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-}
-
 // chin_up
 $chin_up_points = 0;
 if($chin_up >= 17)
@@ -158,7 +153,17 @@ while($endFlag == 0){
     }
     if($endFlag)
         break;
-    for($i = 9.0; $i >= -7.0; $i -= 0.5) {
+    for($i = 9.0; $i > 0; $i -= 0.5) {
+        if($flexibility >= $i) {
+            $flexibility_points = $flex_points_counter;
+            $endFlag = 1;
+            break;
+        }
+        $flex_points_counter -= 1;
+    }
+    if($endFlag)
+        break;
+    for($i = 0; $i >= -7; $i -= 1) {
         if($flexibility >= $i) {
             $flexibility_points = $flex_points_counter;
             $endFlag = 1;
@@ -218,7 +223,7 @@ while($endFlag == 0){
     }
     if($endFlag)
         break;
-    for($i = 31; $i > 0; $i--) {
+    for($i = 31; $i > 30; $i--) {
         if($abs >= $i){
             $abs_points = $abs_points_counter;
             $endFlag = 1;
@@ -226,6 +231,38 @@ while($endFlag == 0){
         }
         $abs_points_counter -= 1;
     }
+    if($endFlag)
+        break;
+    for($i = 30; $i > 14; $i -= 2) {
+        if($abs >= $i){
+            $abs_points = $abs_points_counter;
+            $endFlag = 1;
+            break;
+        }
+        $abs_points_counter -= 1;
+    }
+    if($endFlag)
+        break;
+    for($i = 14; $i > 10; $i--) {
+        if($abs >= $i){
+            $abs_points = $abs_points_counter;
+            $endFlag = 1;
+            break;
+        }
+        $abs_points_counter -= 1;
+    }
+    if($endFlag)
+        break;
+    for($i = 10; $i >= 2; $i -= 2) {
+        if($abs >= $i){
+            $abs_points = $abs_points_counter;
+            $endFlag = 1;
+            break;
+        }
+        $abs_points_counter -= 1;
+    }
+    if($abs >= 1 && $endFlag != 1)
+        $abs_points = 1;
     $endFlag = 1;
 }
 
@@ -254,7 +291,7 @@ while($endFlag == 0){
     }
     if($endFlag)
         break;
-    for($i = 100; $i > 0; $i -= 4) {
+    for($i = 100; $i > 6; $i -= 4) {
         if($skipping_rope >= $i){
             $skipping_rope_points = $skipping_rope_points_counter;
             $endFlag = 1;
