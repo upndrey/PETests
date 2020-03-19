@@ -171,7 +171,8 @@
             <th>Гибкость</th>
             <th>Пресс</th>
             <th>Скакалка 1&nbsp;мин.</th>
-            <th>Бег 12&nbsp;мин.</th>";
+            <th>Бег 12&nbsp;мин.</th>
+            <th>Итог</th>";
     while ($blockId != 9) {
         $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
         $resultBlock = mysqli_query($connection, $query);
@@ -190,13 +191,17 @@
         //Отмечаем нынешний тест, если он пройден
         $query = "(SELECT * FROM func_test WHERE user_id='$loginId[0]' AND block_id='$blockId')";
         $resultBlock = mysqli_query($connection, $query);
+        $query = "(SELECT * FROM func_test_points WHERE user_id='$loginId[0]' AND block_id='$blockId')";
+        $resultPoints = mysqli_query($connection, $query);
+        $funcPointsBlock = mysqli_fetch_array($resultPoints);
         $funcTestBlock = mysqli_fetch_array($resultBlock);
         if($funcTestBlock){
             echo "<tr class='done-block-elem'>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
-                echo "<td>" . $funcTestBlock[$i + 3] . "</td>";
+                echo "<td>" . $funcTestBlock[$i + 3] . "&nbsp;|&nbsp;" . $funcPointsBlock[$i + 3] . "%</td>";
             }
+            echo "<td>" . $funcPointsBlock[10] . "%</td>";
             echo "</tr>";
         }
         elseif($isClosed){
@@ -205,6 +210,7 @@
             for($i = 0; $i < 6; $i++){
                 echo "<td></td>";
             }
+            echo "<td></td>";
             echo "</tr>";
         }
         elseif(!$isTestDone && $currBlock == $blockId){
@@ -213,6 +219,7 @@
             for($i = 0; $i < 6; $i++){
                 echo "<td></td>";
             }
+            echo "<td></td>";
             echo "</tr>";
         }
         else{
@@ -221,6 +228,7 @@
             for($i = 0; $i < 6; $i++){
                 echo "<td>-</td>";
             }
+            echo "<td>-</td>";
             echo "</tr>";
         }
         $blockId++;

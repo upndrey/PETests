@@ -749,11 +749,138 @@ while($usersInfo = mysqli_fetch_array($resultUsers)) {
     }
     $i++;
 }
-
-/////////////////////////////// Здоровье по Апанасенко /////////////////////////////////////////
+/////////////////////////////// Функциональные пробы (баллы)/////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
 $xls->setActiveSheetIndex(5);
+// Получаем активный лист
+$sheet = $xls->getActiveSheet();
+// Подписываем лист
+$sheet->setTitle('(баллы)Функциональные пробы');
+$sheet->getColumnDimensionByColumn(1)->setAutoSize(true);
+
+
+for($col = 'A'; $col <= 'AX'; $col++) {
+    $sheet->getColumnDimension($col)->setAutoSize(true);
+    $sheet->getStyle($col . '1')->getFill()->setFillType(
+        PHPExcel_Style_Fill::FILL_SOLID);
+    $sheet->getStyle($col . '1')->getFill()->getStartColor()->setRGB('EEEEEE');
+    $sheet->getStyle($col . '1')->getAlignment()->setHorizontal(
+        PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+}
+
+// Вставляем текст в ячейку A1
+$sheet->setCellValue("A1", 'Группа');
+$sheet->getStyle('A1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('A1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+// Вставляем текст в ячейку B1
+$sheet->setCellValue("B1", 'Ф.И.О.');
+$sheet->getStyle('B1')->getFill()->setFillType(
+    PHPExcel_Style_Fill::FILL_SOLID);
+$sheet->getStyle('B1')->getFill()->getStartColor()->setRGB('EEEEEE');
+$sheet->getStyle('B1')->getAlignment()->setHorizontal(
+    PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+for($i = 0; $i < 8; $i++){//Блоки
+    $sheet->mergeCellsByColumnAndRow(2 + $i * 8, 1, 2 + $i * 8 + 7, 1);
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8, 1, 'Блок ' . ($i + 1));
+    $sheet->getColumnDimensionByColumn(2 + $i * 8)->setAutoSize(true);
+
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8, 2, 'подтягивания');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 1, 2, 'прыжок в длину');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 2, 2, 'гибкость');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 3, 2, 'пресс');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 4, 2, 'скакалка 1 мин.');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 5, 2, '12 мин. бег');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 6, 2, 'дата');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 8 + 7, 2, 'результат');
+
+
+    $sheet->getColumnDimensionByColumn(2 + $i * 8)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 1)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 2)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 3)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 4)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 5)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 6)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 8 + 7)->setAutoSize(true);
+}
+
+$i = 3;
+
+$query = "(SELECT firstName, lastName, id FROM users WHERE group_name='$group')";
+$resultUsers = mysqli_query($connection, $query);
+
+while($usersInfo = mysqli_fetch_array($resultUsers)) {
+
+    // Выводим группу
+    $sheet->setCellValueByColumnAndRow(0, $i, $group);
+    // Применяем выравнивание
+    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    // Выводим имя и фамилию
+    $userName = $usersInfo[1] . " " . $usersInfo[0];
+    $sheet->setCellValueByColumnAndRow(1, $i, $userName);
+    $sheet->getStyleByColumnAndRow(1, $i)->getAlignment()->
+    setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    // Выводим нормативы
+
+    $temp = 2;
+    for($j = 1; $j <= 8; $j++){
+        $query = "(SELECT * FROM func_test_points WHERE user_id='$usersInfo[2]' AND block_id='$j')";
+
+        $sheet->getStyleByColumnAndRow($temp, $i)->getAlignment()->
+        setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $resultPoints = mysqli_query($connection, $query);
+        $points = mysqli_fetch_array($resultPoints);
+        if($points[0] != NULL){
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[3]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[4]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[5]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[6]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[7]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[8]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[9]);
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
+            $temp += 1;
+        }
+        else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
+        }
+    }
+    $i++;
+}
+/////////////////////////////// Здоровье по Апанасенко /////////////////////////////////////////
+// Устанавливаем индекс активного листа
+$xls->createSheet();
+$xls->setActiveSheetIndex(6);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
@@ -864,7 +991,7 @@ while($usersInfo = mysqli_fetch_array($resultUsers)) {
 /////////////////////////////// Входные данные для здоровья /////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
-$xls->setActiveSheetIndex(6);
+$xls->setActiveSheetIndex(7);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
