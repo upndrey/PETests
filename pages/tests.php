@@ -201,7 +201,7 @@
             for($i = 0; $i < 6; $i++){
                 echo "<td>" . $funcTestBlock[$i + 3] . "&nbsp;|&nbsp;" . $funcPointsBlock[$i + 3] . "%</td>";
             }
-            echo "<td>" . $funcPointsBlock[10] . "%</td>";
+            echo "<td>" . $funcPointsBlock[10] . "б.</td>";
             echo "</tr>";
         }
         elseif($isClosed){
