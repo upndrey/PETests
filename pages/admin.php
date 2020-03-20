@@ -97,6 +97,40 @@ $loginId = mysqli_fetch_array($resultLoginId);
         <input type="hidden" name="saveResult" value="1">
         <input type="submit" name="sendResult" value="Скачать excel">
     </form>
+
+
+    <form action="" class="delGroup" method="post">
+        <label>Выберите группу для выбора пользователей:</label>
+        <select required name="userGroup" class="userGroup">
+            <?
+            $groups = mysqli_query($connection, "(SELECT name FROM groups)");
+            while ($rowGroup = mysqli_fetch_array($groups)) {
+                echo "<option>" . $rowGroup[0] . "</option>";
+            }
+            ?>
+        </select>
+        <input type="submit" value="Выбрать">
+    </form>
+    <form action="../php/delUsers.php" class="delGroup" method="post">
+        <div class="groupList">
+            <label>Выберите пользователей для удаления:</label>
+            <?
+            $group = $_POST['userGroup'];
+            $usersResult = mysqli_query($connection, "(SELECT login, id FROM users WHERE group_name='$group')");
+            $i = 0;
+            while ($users = mysqli_fetch_array($usersResult)) {
+                if($users[0] == "admin") continue;
+                echo "
+                        <input id='user" . $users[1] . "' type='checkbox' name='user" . $i . "' value = '" . $users[1] . "'/>
+                        <label class='group' for='user" . $users[1] . "'>" . $users[0] . "</label>         
+                            ";
+                $i++;
+            }
+            ?>
+        </div>
+        <input type="hidden" name="removeUsers" value="<? echo $i; ?>">
+        <input type="submit" value="Удалить пользователей">
+    </form>
 </div>
 
 </body>
