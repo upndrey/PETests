@@ -914,18 +914,20 @@ $sheet->getStyle('B1')->getAlignment()->setHorizontal(
     PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 for($i = 0; $i < 8; $i++){//Блоки
-    $sheet->mergeCellsByColumnAndRow(2 + $i * 3, 1, 2 + $i * 3 + 2, 1);
-    $sheet->setCellValueByColumnAndRow(2 + $i * 3, 1, 'Блок ' . ($i + 1));
-    $sheet->getColumnDimensionByColumn(2 + $i * 3)->setAutoSize(true);
+    $sheet->mergeCellsByColumnAndRow(2 + $i * 4, 1, 2 + $i * 4 + 3, 1);
+    $sheet->setCellValueByColumnAndRow(2 + $i * 4, 1, 'Блок ' . ($i + 1));
+    $sheet->getColumnDimensionByColumn(2 + $i * 4)->setAutoSize(true);
 
-    $sheet->setCellValueByColumnAndRow(2 + $i * 3, 2, 'Баллы');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 3 + 1, 2, 'Словесная оценка');
-    $sheet->setCellValueByColumnAndRow(2 + $i * 3 + 1, 2, 'Дата');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 4, 2, 'Баллы');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 4 + 1, 2, 'Баллы (100)');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 4 + 2, 2, 'Словесная оценка');
+    $sheet->setCellValueByColumnAndRow(2 + $i * 4 + 3, 2, 'Дата');
 
 
-    $sheet->getColumnDimensionByColumn(2 + $i * 3)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 3 + 1)->setAutoSize(true);
-    $sheet->getColumnDimensionByColumn(2 + $i * 3 + 2)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 4)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 4 + 1)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 4 + 2)->setAutoSize(true);
+    $sheet->getColumnDimensionByColumn(2 + $i * 4 + 3)->setAutoSize(true);
 }
 
 $i = 3;
@@ -959,6 +961,8 @@ while($usersInfo = mysqli_fetch_array($resultUsers)) {
         if($points[0] != NULL){
             $sheet->setCellValueByColumnAndRow($temp, $i, $points[10]);
             $temp += 1;
+            $sheet->setCellValueByColumnAndRow($temp, $i, $points[12]);
+            $temp += 1;
             if($points[10] >= 16)
                 $points[10] = "Высокий";
             elseif($points[10] >= 12)
@@ -975,6 +979,8 @@ while($usersInfo = mysqli_fetch_array($resultUsers)) {
             $temp += 1;
         }
         else{
+            $sheet->setCellValueByColumnAndRow($temp, $i, '-');
+            $temp += 1;
             $sheet->setCellValueByColumnAndRow($temp, $i, '-');
             $temp += 1;
             $sheet->setCellValueByColumnAndRow($temp, $i, '-');

@@ -98,15 +98,17 @@ $loginId = mysqli_fetch_array($resultLoginId);
         <input type="submit" name="sendResult" value="Скачать excel">
     </form>
 
-
+    <!--
     <form action="" class="delGroup" method="post">
         <label>Выберите группу для выбора пользователей:</label>
         <select required name="userGroup" class="userGroup">
             <?
+            /*
             $groups = mysqli_query($connection, "(SELECT name FROM groups)");
             while ($rowGroup = mysqli_fetch_array($groups)) {
                 echo "<option>" . $rowGroup[0] . "</option>";
             }
+            */
             ?>
         </select>
         <input type="submit" value="Выбрать">
@@ -115,6 +117,7 @@ $loginId = mysqli_fetch_array($resultLoginId);
         <div class="groupList">
             <label>Выберите пользователей для удаления:</label>
             <?
+            /*
             $group = $_POST['userGroup'];
             $usersResult = mysqli_query($connection, "(SELECT login, id FROM users WHERE group_name='$group')");
             $i = 0;
@@ -126,11 +129,13 @@ $loginId = mysqli_fetch_array($resultLoginId);
                             ";
                 $i++;
             }
+            */
             ?>
         </div>
-        <input type="hidden" name="removeUsers" value="<? echo $i; ?>">
+        <input type="hidden" name="removeUsers" value="<? // echo $i; ?>">
         <input type="submit" value="Удалить пользователей">
     </form>
+    -->
 </div>
 
 </body>

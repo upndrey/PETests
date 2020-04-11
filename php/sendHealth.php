@@ -170,11 +170,35 @@ else{
 }
 $result = $stat[0] + $stat[1] + $stat[2] + $stat[3] + $stat[4];
 
+$result_100 = 0;
+$result_counter = 18.6;
+for($i = 100; $i >= 1; $i--) {
+    if($result >= $result_counter) {
+        $result_100 = $i;
+        break;
+    }
+
+    $result_counter -= 0.2;
+    $i--;
+    if($result >= $result_counter) {
+        $result_100 = $i;
+        break;
+    }
+
+    $result_counter -= 0.3;
+    $i--;
+    if($result >= $result_counter) {
+        $result_100 = $i;
+        break;
+    }
+
+    $result_counter -= 0.2;
+}
 
 $date = getdate();
 $dateResult = $date['mday'] . "." . $date['mon'] . "." . $date['year'];
 //Записываем нормативы в результат
-$query = "INSERT INTO health (user_id, block_id, weight, height, lung_capacity, dynamo, heart_rate, arterial_press, recovery, result, date) VALUES ('$loginId[0]', '$block_id', '$weight', '$height', '$lung_capacity', '$dynamo', '$heart_rate', '$arterial_press', '$recovery', '$result', '$dateResult')";
+$query = "INSERT INTO health (user_id, block_id, weight, height, lung_capacity, dynamo, heart_rate, arterial_press, recovery, result, date, result_100) VALUES ('$loginId[0]', '$block_id', '$weight', '$height', '$lung_capacity', '$dynamo', '$heart_rate', '$arterial_press', '$recovery', '$result', '$dateResult', '$result_100')";
 mysqli_query($connection, $query);
 
 header('Location: ' . $_SERVER['HTTP_SERVER'] . '/pages/tests.php');

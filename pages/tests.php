@@ -199,9 +199,9 @@
             echo "<tr class='done-block-elem'>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
-                echo "<td>" . $funcTestBlock[$i + 3] . "&nbsp;|&nbsp;" . $funcPointsBlock[$i + 3] . "%</td>";
+                echo "<td>" . $funcTestBlock[$i + 3] . "&nbsp;|&nbsp;" . $funcPointsBlock[$i + 3] . " б.</td>";
             }
-            echo "<td>" . $funcPointsBlock[10] . "б.</td>";
+            echo "<td>" . $funcPointsBlock[10] . " б.</td>";
             echo "</tr>";
         }
         elseif($isClosed){
@@ -293,7 +293,7 @@
         elseif($rowBlock[10] <= 3)
             $rowBlock[10] = "Низкий";
         if($isDone && $rowBlock[3])
-            echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[10]</div>";
+            echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[10] ($rowBlock[12] б.)</div>";
         else if($isDone && $testId == 3 && $rowBlock[3] != NULL)
             echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": +</div>";
         else if($isDone && !$rowBlock[3] && $rowBlock[3] == NULL)
