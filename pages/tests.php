@@ -247,11 +247,11 @@
 
     if($isTestDone){
         $_SESSION['health'] = 1;
-        echo "<a href='./health.php' class='test-link test-done health-link'>Функциональные пробы + Уровень здоровья по Апонасенко</a>";
+        echo "<a href='./health.php' class='test-link test-done health-link'>Функциональные пробы + Уровень здоровья по Апанасенко Г.Л.</a>";
     }
     else{
         $_SESSION['health'] = NULL;
-        echo "<a href='./health.php' class='test-link health-link'>Функциональные пробы + Уровень здоровья по Апонасенко</a>";
+        echo "<a href='./health.php' class='test-link health-link'>Функциональные пробы + Уровень здоровья по Апанасенко Г.Л.</a>";
     }
     $blockId = 1;
     echo "<div class='test-block health-block-elem'>";

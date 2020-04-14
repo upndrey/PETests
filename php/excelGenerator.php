@@ -877,14 +877,14 @@ while($usersInfo = mysqli_fetch_array($resultUsers)) {
     }
     $i++;
 }
-/////////////////////////////// Здоровье по Апанасенко /////////////////////////////////////////
+/////////////////////////////// Здоровье по Апанасенко Г.Л. /////////////////////////////////////////
 // Устанавливаем индекс активного листа
 $xls->createSheet();
 $xls->setActiveSheetIndex(6);
 // Получаем активный лист
 $sheet = $xls->getActiveSheet();
 // Подписываем лист
-$sheet->setTitle('Здоровье по Апанасенко');
+$sheet->setTitle('Здоровье по Апанасенко Г.Л.');
 $sheet->getColumnDimensionByColumn(1)->setAutoSize(true);
 
 
