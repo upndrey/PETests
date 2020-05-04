@@ -23,8 +23,8 @@ $resultAnswers = mysqli_query($connection, "(SELECT text FROM answer_variants WH
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap&subset=cyrillic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/media.css">
+    <link rel="stylesheet" href="../css/indexv2.css">
+    <link rel="stylesheet" href="../css/mediav2.css">
 </head>
 <body>
 

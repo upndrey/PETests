@@ -70,10 +70,6 @@
     .tests .test-link{
         font-size: 18px;
     }
-
-    .test-block{
-        overflow-x: scroll;
-    }
 }
 
 /* sm-устройства (больше или равно 576px) */
@@ -158,9 +154,6 @@
     .close-btn{
         position: fixed;
         top: 30px;
-    }
-    .test-block{
-        overflow-x: scroll;
     }
     .login{
         height: auto;
@@ -258,7 +251,11 @@
     }
 }
 
-
+@media (max-width: 1200px) {
+    .test-block{
+        overflow-x: scroll;
+    }
+}
 
 /* xl-устройства (больше или равно 1200px) */
 @media (min-width: 1200px) {

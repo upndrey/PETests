@@ -22,8 +22,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap&subset=cyrillic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/media.css">
+    <link rel="stylesheet" href="../css/indexv2.css">
+    <link rel="stylesheet" href="../css/mediav2.css">
 </head>
 <body>
 <header class="tests-header">
@@ -166,13 +166,29 @@
     echo "<div class='test-block'>";
     echo "<table class='funcTest-table'>";
     echo "  <th></th>
-            <th>Подтягивания</th>
-            <th>Прыжок в длину</th>
-            <th>Гибкость</th>
-            <th>Пресс</th>
-            <th>Скакалка 1&nbsp;мин.</th>
-            <th>Бег 12&nbsp;мин.</th>
-            <th>Итог</th>";
+            <th colspan='2'>Подтягивания</th>
+            <th colspan='2'>Прыжок в длину</th>
+            <th colspan='2'>Гибкость</th>
+            <th colspan='2'>Пресс</th>
+            <th colspan='2'>Скакалка 1&nbsp;мин.</th>
+            <th colspan='2'>Бег 12&nbsp;мин.</th>
+            <th colspan='2'>Итог</th>";
+    echo "  <tr>
+                <td></td>
+                <td>Результат</td>
+                <td>Балл</td>
+                <td>Результат</td>
+                <td>Балл</td>
+                <td>Результат</td>
+                <td>Балл</td>
+                <td>Результат</td>
+                <td>Балл</td>
+                <td>Результат</td>
+                <td>Балл</td>
+                <td>Результат</td>
+                <td>Балл</td>
+                <td>Балл</td>
+            </tr>";
     while ($blockId != 9) {
         $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
         $resultBlock = mysqli_query($connection, $query);
@@ -199,9 +215,9 @@
             echo "<tr class='done-block-elem'>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
-                echo "<td>" . $funcTestBlock[$i + 3] . "&nbsp;|&nbsp;" . $funcPointsBlock[$i + 3] . " б.</td>";
+                echo "<td>" . $funcTestBlock[$i + 3] . "</td><td>" . $funcPointsBlock[$i + 3] . "&nbsp;б.</td>";
             }
-            echo "<td>" . $funcPointsBlock[10] . " б.</td>";
+            echo "<td>" . round($funcPointsBlock[10], 2) . "&nbsp;б.</td>";
             echo "</tr>";
         }
         elseif($isClosed){
@@ -217,7 +233,7 @@
             echo "<tr>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
-                echo "<td></td>";
+                echo "<td></td><td></td>";
             }
             echo "<td></td>";
             echo "</tr>";
@@ -226,7 +242,7 @@
             echo "<tr class='done-block-elem'>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
-                echo "<td>-</td>";
+                echo "<td>-</td><td>-</td>";
             }
             echo "<td>-</td>";
             echo "</tr>";
@@ -255,6 +271,12 @@
     }
     $blockId = 1;
     echo "<div class='test-block health-block-elem'>";
+    echo "  
+        <div class='block-elem-cont'>
+            <div class='block-elem block-elem-3col'>Блок</div>
+            <div class='block-elem block-elem-3col'>Словесная оценка</div>
+            <div class='block-elem block-elem-3col'>Баллы</div>
+        </div>";
     while ($blockId != 9) {
         $query = "(SELECT dateStart, dateEnd FROM blocks WHERE id='$blockId')";
         $resultBlock = mysqli_query($connection, $query);
@@ -292,16 +314,34 @@
             $rowBlock[10] = "Ниже среднего";
         elseif($rowBlock[10] <= 3)
             $rowBlock[10] = "Низкий";
-        if($isDone && $rowBlock[3])
-            echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": $rowBlock[10] ($rowBlock[12] б.)</div>";
-        else if($isDone && $testId == 3 && $rowBlock[3] != NULL)
-            echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": +</div>";
-        else if($isDone && !$rowBlock[3] && $rowBlock[3] == NULL)
-            echo "<div class='block-elem done-block-elem'>Блок " . $blockId . ": -</div>";
-        else if($isClosed)
-            echo "<div class='block-elem closed-block-elem'>Блок " . $blockId . "</div>";
-        else
-            echo "<div class='block-elem'>Блок " . $blockId . "</div>";
+        echo "<div class='block-elem-cont'>";
+        if($isDone && $rowBlock[3]){
+            echo "<div class='block-elem done-block-elem block-elem-3col'>Блок " . $blockId . "</div>";
+            echo "<div class='block-elem done-block-elem block-elem-3col'>$rowBlock[10]</div>";
+            echo "<div class='block-elem done-block-elem block-elem-3col'>$rowBlock[12]&nbsp;б.</div>";
+        }
+        else if($isDone && $testId == 3 && $rowBlock[3] != NULL){
+            echo "<div class='block-elem done-block-elem block-elem-3col'>Блок " . $blockId . "</div>";
+            echo "<div class='block-elem done-block-elem block-elem-3col'>+</div>";
+            echo "<div class='block-elem done-block-elem block-elem-3col'>+</div>";
+        }
+        else if($isDone && !$rowBlock[3] && $rowBlock[3] == NULL){
+            echo "<div class='block-elem done-block-elem block-elem-3col'>Блок " . $blockId . "</div>";
+            echo "<div class='block-elem done-block-elem block-elem-3col'>-</div>";
+            echo "<div class='block-elem done-block-elem block-elem-3col'>-</div>";
+        }
+        else if($isClosed){
+            echo "<div class='block-elem closed-block-elem block-elem-3col'>Блок " . $blockId . "</div>";
+            echo "<div class='block-elem closed-block-elem block-elem-3col'></div>";
+            echo "<div class='block-elem closed-block-elem block-elem-3col'></div>";
+        }
+        else{
+            echo "<div class='block-elem block-elem-3col'>Блок " . $blockId . "</div>";
+            echo "<div class='block-elem block-elem-3col'></div>";
+            echo "<div class='block-elem block-elem-3col'></div>";
+        }
+
+        echo "</div>";
         $blockId++;
     }
     echo "</div>";

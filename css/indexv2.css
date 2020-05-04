@@ -288,6 +288,16 @@ body{
     align-items: center;
 }
 
+.health-block-elem {
+    flex-direction: column;
+}
+
+.test-block .block-elem-cont {
+    display: flex;
+    width: 100%;
+    min-width: 400px;
+}
+
 .test-block .block-elem{
     font-size: 16px;
     padding: 10px 30px;
@@ -299,6 +309,15 @@ body{
     -ms-transition: ease-in-out .5s;
     -o-transition: ease-in-out .5s;
     transition: ease-in-out .5s;
+}
+
+.block-elem-cont .block-elem {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .test-block .done-block-elem{
@@ -452,11 +471,13 @@ body{
     margin: auto;
     margin-top: 10px;
     margin-bottom: 20px;
+    box-sizing: border-box;
     width: 100%;
 }
 
 .funcTest-table td, .funcTest-table th{
-    padding: 10px;
+    padding: 5px;
+    box-sizing: border-box;
     border: 1px solid #000;
     vertical-align:middle;
     text-align: center;
