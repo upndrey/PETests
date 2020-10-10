@@ -224,7 +224,7 @@
             echo "<tr class='closed-block-elem'>";
             echo "<td>Блок&nbsp;" . $blockId . "</td>";
             for($i = 0; $i < 6; $i++){
-                echo "<td></td>";
+                echo "<td></td><td></td>";
             }
             echo "<td></td>";
             echo "</tr>";
